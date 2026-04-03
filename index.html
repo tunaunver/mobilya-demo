@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Modern Lüks Mobilya</title>
+    <meta name="description" content="Zarif eviniz için modern, minimal ve lüks mobilyaları keşfedin.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- SEO Manager -->
+    <script src="js/seo-manager.js"></script>
+    <!-- Auth & Logic -->
+    <script src="js/auth-manager.js"></script>
+    <script src="js/nav-auth.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        accent: {
+                            100: '#f4f1ed',
+                            200: '#e3dccf',
+                            500: '#c5b79f',
+                            900: '#3e3831',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hover-scale {
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .group:hover .hover-scale {
+            transform: scale(1.05);
+        }
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Slider Transitions */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        .hero-container:hover .hero-nav-btn {
+            opacity: 1;
+        }
+        .hero-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            scale: 1.1;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased flex flex-col min-h-screen transition-colors duration-300">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden">
+                    <button type="button" class="text-gray-900 hover:text-gray-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-gray-900">AURA</a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:ml-10 md:flex md:space-x-8">
+                    <a href="index.html" class="text-gray-900 border-b-2 border-gray-900 px-1 pt-1 text-sm font-medium transition-colors">Ana Sayfa</a>
+                    <a href="products.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Ürünler</a>
+                    <a href="about.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Hakkımızda</a>
+                    <a href="contact.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">İletişim</a>
+                </div>
+
+                <!-- Icons -->
+                <div class="flex items-center space-x-6">
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors relative">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-gray-900 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <a href="#" class="hidden sm:inline-block text-gray-900 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="hero-container max-w-[1500px] mx-auto relative h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-accent-100 rounded-3xl shadow-lg">
+            
+            <!-- Slider Wrapper -->
+            <div id="public-hero-slider" class="absolute inset-0 z-0 text-center">
+                <!-- Images and content will be injected here -->
+                <div class="hero-slide active">
+                    <img src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20"></div>
+                </div>
+            </div>
+            <!-- Navigation Arrows -->
+            <button onclick="prevHero()" class="hero-nav-btn absolute left-8 z-20 hidden md:flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button onclick="nextHero()" class="hero-nav-btn absolute right-8 z-20 hidden md:flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Featured Categories Section -->
+    <section class="py-24 bg-white transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 id="public-cat-section-title" class="text-3xl md:text-4xl font-serif text-gray-900 mb-4">Özel Kategoriler</h2>
+                <div class="w-16 h-px bg-gray-900 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Category 1 -->
+                <a id="public-cat-link-0" href="products.html?category=seating" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-0" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 1" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-0" class="text-xl font-serif text-white mb-1">Oturma</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 2 -->
+                <a id="public-cat-link-1" href="products.html?category=tables" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-1" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 2" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-1" class="text-xl font-serif text-white mb-1">Masalar</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 3 -->
+                <a id="public-cat-link-2" href="products.html?category=lighting" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-2" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 3" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-2" class="text-xl font-serif text-white mb-1">Aydınlatma</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 4 -->
+                <a id="public-cat-link-3" href="products.html?category=bedroom" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-3" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 4" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-3" class="text-xl font-serif text-white mb-1">Yatak Odası</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 5 -->
+                <a id="public-cat-link-4" href="products.html?category=storage" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-4" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 5" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-4" class="text-xl font-serif text-white mb-1">Depolama</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 6 -->
+                <a id="public-cat-link-5" href="products.html?category=accessories" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-5" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 6" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-5" class="text-xl font-serif text-white mb-1">Aksesuarlar</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 7 -->
+                <a id="public-cat-link-6" href="products.html?category=outdoor" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-6" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 7" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-6" class="text-xl font-serif text-white mb-1">Dış Mekan</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                <!-- Category 8 -->
+                <a id="public-cat-link-7" href="products.html?category=office" class="group block relative aspect-square overflow-hidden bg-gray-100">
+                    <img id="public-cat-img-7" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" alt="Kategori 8" class="absolute inset-0 w-full h-full object-cover object-center hover-scale">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <h3 id="public-cat-title-7" class="text-xl font-serif text-white mb-1">Ofis</h3>
+                        <span class="text-white/80 text-xs tracking-widest uppercase flex items-center group-hover:text-white transition-colors">
+                            Keşfet <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Gallery -->
+    <section class="py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 id="public-gal-section-title" class="text-3xl md:text-4xl font-serif text-gray-900 mb-4">Proje Galerisi</h2>
+                <div class="w-16 h-px bg-gray-900 mx-auto"></div>
+                <p id="public-gal-section-desc" class="mt-6 text-gray-600 font-light max-w-2xl mx-auto">AURA mobilyalarının mekanları nasıl dönüştürdüğünü görün. Minimalist yaklaşımımızla tasarlanmış gerçek iç mekanları keşfedin.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="group overflow-hidden relative aspect-square">
+                    <img id="public-gal-img-0" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" alt="Project 1" class="w-full h-full object-cover hover-scale">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span id="public-gal-text-0" class="text-white font-serif text-xl tracking-wide">Modern Salon</span>
+                    </div>
+                </div>
+                <div class="group overflow-hidden relative aspect-square">
+                    <img id="public-gal-img-1" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" alt="Project 2" class="w-full h-full object-cover hover-scale">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span id="public-gal-text-1" class="text-white font-serif text-xl tracking-wide">Yemek Odası</span>
+                    </div>
+                </div>
+                <div class="group overflow-hidden relative aspect-square">
+                    <img id="public-gal-img-2" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" alt="Project 3" class="w-full h-full object-cover hover-scale">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span id="public-gal-text-2" class="text-white font-serif text-xl tracking-wide">Yatak Odası</span>
+                    </div>
+                </div>
+                <div class="group overflow-hidden relative aspect-square">
+                    <img id="public-gal-img-3" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1600" alt="Project 4" class="w-full h-full object-cover hover-scale">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span id="public-gal-text-3" class="text-white font-serif text-xl tracking-wide">Mutfak Detay</span>
+                    </div>
+                </div>
+                <div class="group overflow-hidden relative aspect-square">
+                    <img id="public-gal-img-4" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800" alt="Project 5" class="w-full h-full object-cover hover-scale">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span id="public-gal-text-4" class="text-white font-serif text-xl tracking-wide">Çalışma Köşesi</span>
+                    </div>
+                </div>
+                <!-- New Gallery Text Card -->
+                <div class="flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-100 text-center relative aspect-square">
+                    <h3 id="public-gal-card-title" class="text-xl font-serif text-gray-900 mb-4 uppercase tracking-wider">Mekanınızı Tasarlayın</h3>
+                    <p id="public-gal-card-desc" class="text-gray-500 font-light text-sm leading-relaxed">Hayallerinizdeki evi yaratmak için bizimle iletişime geçin.</p>
+                    <div class="mt-6 w-8 h-px bg-gray-300"></div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="#" class="inline-block border border-gray-900 text-gray-900 px-8 py-3 text-sm font-medium tracking-widest uppercase hover:bg-gray-900 hover:text-white transition-colors duration-300">
+                    Tüm Galeriyi Gör
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-accent-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-gray-900 mb-4">Müşterilerimiz Ne Diyor</h2>
+                <div class="w-16 h-px bg-gray-900 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 shadow-sm">
+                    <div class="flex items-center mb-4 text-gray-900">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-gray-600 font-light italic mb-6 leading-relaxed">"Nosh sandalyenin işçiliği olağanüstü. Yemek odamızın görünümünü tamamen değiştirdi. Kesinlikle tavsiye ederim!"</p>
+                    <p class="text-gray-900 font-medium text-sm tracking-wide uppercase">- Elena Rodriguez</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 shadow-sm">
+                    <div class="flex items-center mb-4 text-gray-900">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-gray-600 font-light italic mb-6 leading-relaxed">"AURA'nın detaylara gösterdiği özen eşsiz. Meşe yemek masasını almak yeni evimiz için verdiğimiz en iyi karardı."</p>
+                    <p class="text-gray-900 font-medium text-sm tracking-wide uppercase">- David Chen</p>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 shadow-sm">
+                    <div class="flex items-center mb-4 text-gray-900">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-gray-600 font-light italic mb-6 leading-relaxed">"Bir iç mimar olarak, zamana meydan okuyan otantik, minimalist parçalar arayan müşterilerime her zaman AURA'yı tavsiye ediyorum."</p>
+                    <p class="text-gray-900 font-medium text-sm tracking-wide uppercase">- Sarah Jenkins</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aesthetic Story / About snippet -->
+    <section class="py-24 bg-white overflow-hidden transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="w-full lg:w-1/2">
+                    <img id="public-story-bg" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=2000" alt="Brand Aesthetics" class="w-full h-auto object-cover rounded-sm transition-all">
+                </div>
+                <div class="w-full lg:w-1/2 lg:pl-8 content-center">
+                    <span id="public-story-subtitle" class="block text-sm font-medium tracking-widest text-gray-500 uppercase mb-4">Felsefemiz</span>
+                    <h2 id="public-story-title" class="text-4xl md:text-5xl font-serif text-gray-900 mb-6 leading-tight">Ruha hitap eden <br>tasarım.</h2>
+                    <p id="public-story-desc" class="text-gray-600 font-light text-lg mb-8 leading-relaxed">
+                        Mekanınızın özünüzü yansıtması gerektiğine inanıyoruz. Parçalarımız, sürdürülebilir malzemeler ve zamansız tasarım ilkeleri kullanılarak titiz bir detay odaklılıkla üretilmektedir. Bu sadece mobilya değil; günlük deneyimlerinizin bir kürasyonudur.
+                    </p>
+                    <a href="about.html" class="inline-flex items-center text-gray-900 font-medium tracking-widest uppercase text-sm group">
+                        Hikayemizi Keşfedin 
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-auto py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Brand Info -->
+                <div class="lg:col-span-1">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-white block mb-6">AURA</a>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
+                        Modern evler için olağanüstü, minimalist parçaların kürasyonu. Konforu tasarlıyor, yaşamı yüceltiyoruz.
+                    </p>
+                    <!-- Socials -->
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <!-- Add other social icons as needed -->
+                    </div>
+                </div>
+
+                <!-- Shop Links -->
+                <div>
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Alışveriş</h4>
+                    <ul class="space-y-4">
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Tüm Ürünler</a></li>
+                        <li><a href="products.html?category=seating" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Oturma Grupları</a></li>
+                        <li><a href="products.html?category=tables" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Masalar</a></li>
+                        <li><a href="products.html?category=lighting" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Aydınlatma</a></li>
+                        <li><a href="products.html?category=accessories" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Aksesuarlar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div>
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">İletişim</h4>
+                    <ul class="space-y-4 text-sm font-light text-gray-400">
+                        <li id="f-address">Nişantaşı, İstanbul</li>
+                        <li id="f-email">info@auramobilya.com</li>
+                        <li id="f-phone">+90 555 123 45 67</li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="lg:col-span-1">
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Bülten</h4>
+                    <p class="text-gray-400 text-sm font-light mb-4">Güncellemelerden haberdar olmak için abone olun.</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="E-posta" class="bg-gray-800 border-none text-white px-4 py-3 text-sm focus:ring-1 focus:ring-white outline-none w-full" required>
+                        <button type="submit" class="bg-white text-gray-900 border border-white hover:bg-transparent hover:text-white px-4 py-3 text-sm font-medium tracking-widest uppercase transition-colors w-full">Abone Ol</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-light">
+                <p>&copy; 2026 AURA Mobilya. Tüm hakları saklıdır.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Gizlilik Politikası</a>
+                    <a href="#" class="hover:text-white transition-colors">Hizmet Şartları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a id="f-whatsapp-btn" href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] hover:scale-110 transition-all duration-300 group flex items-center justify-center">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <!-- Dynamic Product Loading Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Dynamic Product Renders
+            async function loadProducts() {
+                const grid = document.getElementById('featured-products-grid');
+                if (!grid) return;
+
+                try {
+                    let products = [];
+                    const STORE_KEY = 'aura_products';
+                    const stored = localStorage.getItem(STORE_KEY);
+                    
+                    if (stored) {
+                        products = JSON.parse(stored);
+                    } else {
+                        const response = await fetch('data/products.json');
+                        if (!response.ok) throw new Error('Ürün verisi yüklenemedi');
+                        products = await response.json();
+                    }
+
+                    const featured = products.slice(0, 4);
+                    grid.innerHTML = '';
+                    
+                    featured.forEach((product, index) => {
+                        let badgeHtml = '';
+                        if (index === 0) badgeHtml = `<div class="absolute top-4 left-4 bg-gray-900 text-white px-2 py-1 text-xs font-semibold tracking-wider uppercase">En Çok Satan</div>`;
+                        else if (product.isNew) badgeHtml = `<div class="absolute top-4 left-4 bg-white px-2 py-1 text-xs font-semibold tracking-wider uppercase text-gray-900">Yeni</div>`;
+
+                        const detailUrl = product.type === 'configurator' ? `configurator.html?id=${product.id}` : `product-detail.html?id=${product.id}`;
+                        const imgUrl = (product.images && product.images[0]) || product.image || 'https://via.placeholder.com/600x800';
+
+                        const productHtml = `
+                            <div class="group">
+                                <a href="${detailUrl}" class="block mb-4 overflow-hidden bg-gray-100 aspect-[4/5] relative">
+                                    <img src="${imgUrl}" alt="${product.name}" class="w-full h-full object-cover object-center hover-scale">
+                                    ${badgeHtml}
+                                    <div class="absolute bottom-4 left-0 right-0 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                                        <button class="w-full bg-white text-gray-900 py-3 text-xs font-medium tracking-widest uppercase hover:bg-gray-900 hover:text-white transition-colors shadow-xl" onclick="event.preventDefault(); alert('Ürün sepete eklendi!');">Sepete Ekle</button>
+                                    </div>
+                                </a>
+                                <div class="text-center">
+                                    <h3 class="text-sm font-medium text-gray-900 mb-1 font-serif tracking-wide">
+                                        <a href="${detailUrl}">${product.name}</a>
+                                    </h3>
+                                    <p class="text-gray-500 text-xs font-light tracking-widest">₺${product.price ? product.price.toLocaleString('tr-TR') : '0'}</p>
+                                </div>
+                            </div>
+                        `;
+                        grid.innerHTML += productHtml;
+                    });
+                } catch (error) {
+                    console.error('Products error:', error);
+                    grid.innerHTML = '<p class="col-span-full py-12 text-center text-gray-400 font-light">Ürünler yüklenirken bir hata oluştu.</p>';
+                }
+            }
+
+            // Theme & Content Application
+            function applyThemeSettings() {
+                const THEME_STORE_KEY = 'aura_theme_settings';
+                const stored = localStorage.getItem(THEME_STORE_KEY);
+                if (!stored) return;
+
+                const settings = JSON.parse(stored);
+                let activeTheme = null;
+
+                // Robust check for multi-theme structure vs legacy flat structure
+                if (settings.themes && settings.activeThemeId) {
+                    activeTheme = settings.themes.find(t => t.id === settings.activeThemeId) || settings.themes[0];
+                } else if (settings.hero || settings.story) {
+                    activeTheme = settings;
+                }
+
+                if (!activeTheme) return;
+
+                // Helper for multi-line text
+                const setMultiline = (el, text) => {
+                    if (!el || !text) return;
+                    el.innerHTML = text.replace(/\n|\\n/g, '<br>');
+                };
+
+                // Apply Hero
+                if (activeTheme.hero) {
+                    const h = activeTheme.hero;
+                    const slider = document.getElementById('public-hero-slider');
+
+                    if (slider && h.slides && h.slides.length > 0) {
+                        slider.innerHTML = h.slides.map((slide, idx) => `
+                            <div class="hero-slide ${idx === 0 ? 'active' : ''}">
+                                <img src="${slide.img}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/20"></div>
+                                
+                                <div class="absolute inset-0 z-10 flex items-center justify-center overflow-hidden">
+                                     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto ${idx === 0 ? 'fade-in-up' : ''}">
+                                        <span class="block text-sm font-medium tracking-[0.2em] text-white uppercase mb-4">${slide.subtitle || ''}</span>
+                                        <h1 class="text-5xl md:text-7xl font-serif text-white leading-tight mb-6 drop-shadow-lg">${(slide.title || '').replace(/\n|\\n/g, '<br>')}</h1>
+                                        <p class="text-lg md:text-xl text-gray-100 font-light mb-10 max-w-2xl mx-auto drop-shadow-md">${slide.desc || ''}</p>
+                                        ${slide.btnText ? `
+                                            <a href="${slide.btnLink || '#'}" class="inline-block bg-white text-gray-900 px-10 py-4 uppercase tracking-widest text-sm font-medium hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+                                                ${slide.btnText}
+                                            </a>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                        startHeroSlider(h.slides.length);
+                    }
+                }
+
+                // Apply Story
+                if (activeTheme.story) {
+                    const s = activeTheme.story;
+                    const bEl = document.getElementById('public-story-bg');
+                    const sEl = document.getElementById('public-story-subtitle');
+                    const tEl = document.getElementById('public-story-title');
+                    const dEl = document.getElementById('public-story-desc');
+
+                    if (bEl && s.imgBase64) bEl.src = s.imgBase64;
+                    setMultiline(sEl, s.subtitle);
+                    setMultiline(tEl, s.title);
+                    setMultiline(dEl, s.desc);
+                }
+
+                // Apply Section Titles
+                const catTEl = document.getElementById('public-cat-section-title');
+                const galTEl = document.getElementById('public-gal-section-title');
+                const galDEl = document.getElementById('public-gal-section-desc');
+
+                setMultiline(catTEl, activeTheme.catSectionTitle);
+                setMultiline(galTEl, activeTheme.galSectionTitle);
+                setMultiline(galDEl, activeTheme.galSectionDesc);
+
+                const galCTEl = document.getElementById('public-gal-card-title');
+                const galCDEl = document.getElementById('public-gal-card-desc');
+                setMultiline(galCTEl, activeTheme.galCardTitle);
+                setMultiline(galCDEl, activeTheme.galCardDesc);
+
+                // Apply Categories
+                if (activeTheme.categories && activeTheme.categories.length > 0) {
+                    activeTheme.categories.forEach((cat, i) => {
+                        const imgEl = document.getElementById(`public-cat-img-${i}`);
+                        const titleEl = document.getElementById(`public-cat-title-${i}`);
+                        const linkEl = document.getElementById(`public-cat-link-${i}`);
+                        
+                        if (linkEl) {
+                            if (cat.active === false) {
+                                linkEl.classList.add('hidden');
+                            } else {
+                                linkEl.classList.remove('hidden');
+                                if (imgEl && cat.imgBase64) imgEl.src = cat.imgBase64;
+                                if (titleEl && cat.title) titleEl.innerText = cat.title;
+                                if (linkEl && cat.link) linkEl.href = cat.link;
+                            }
+                        }
+                    });
+                }
+
+                // Apply Gallery
+                if (activeTheme.gallery && activeTheme.gallery.length > 0) {
+                    activeTheme.gallery.forEach((gal, i) => {
+                        const imgEl = document.getElementById(`public-gal-img-${i}`);
+                        const textEl = document.getElementById(`public-gal-text-${i}`);
+                        if (imgEl && gal.imgBase64) imgEl.src = gal.imgBase64;
+                        if (textEl && gal.text) textEl.innerText = gal.text;
+                    });
+                }
+
+                // Apply Footer
+                if (activeTheme.footer) {
+                    const f = activeTheme.footer;
+                    const addr = document.getElementById('f-address');
+                    const email = document.getElementById('f-email');
+                    const phone = document.getElementById('f-phone');
+                    const waBtn = document.getElementById('f-whatsapp-btn');
+                    
+                    if (addr && f.address) addr.innerText = f.address;
+                    if (email && f.email) email.innerText = f.email;
+                    if (phone && f.phone) phone.innerText = f.phone;
+                    if (waBtn && f.whatsapp) waBtn.href = `https://wa.me/${f.whatsapp.replace(/\D/g, '')}`;
+                }
+            }
+
+            // Run loaders
+            loadProducts();
+            applyThemeSettings();
+        });
+
+        // Hero Slider Logic
+        let heroIndex = 0;
+        let heroInterval = null;
+        let totalHeroSlides = 0;
+
+        function startHeroSlider(count) {
+            totalHeroSlides = count;
+            if (count > 1) {
+                if (heroInterval) clearInterval(heroInterval);
+                heroInterval = setInterval(nextHero, 6000);
+            }
+        }
+
+        function nextHero() {
+            if (totalHeroSlides <= 1) return;
+            heroIndex = (heroIndex + 1) % totalHeroSlides;
+            updateHeroView();
+        }
+
+        function prevHero() {
+            if (totalHeroSlides <= 1) return;
+            heroIndex = (heroIndex - 1 + totalHeroSlides) % totalHeroSlides;
+            updateHeroView();
+        }
+
+        function updateHeroView() {
+            const slides = document.querySelectorAll('.hero-slide');
+            slides.forEach((s, i) => {
+                if (i === heroIndex) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+            if (heroInterval) {
+                clearInterval(heroInterval);
+                heroInterval = setInterval(nextHero, 6000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Koleksiyon</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        aura: {
+                            gold: '#C5A880',
+                            dark: '#1A1A1A',
+                            light: '#F9F9F9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Auth & Logic -->
+    <script src="js/auth-manager.js"></script>
+    <script src="js/nav-auth.js"></script>
+    
+    <script src="js/shop-core.js"></script>
+    <script src="js/store-logic.js"></script>
+    <script src="js/cart-ui.js"></script>
+    <script src="js/seo-manager.js"></script>
+    
+    <style>
+        body {
+            background-color: #FAFAFA;
+            color: #1A1A1A;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image Zoom on hover */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+        .img-zoom-container img {
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-zoom-container:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="font-sans pt-24">
+
+    <!-- NAVIGATION (Solid Background) -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-4 px-6 md:px-12" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-900 hover:opacity-75" id="mobile-menu-btn">
+                <i class="ph ph-list text-3xl"></i>
+            </button>
+            
+            <!-- Logo -->
+            <a href="theme2-index.html" class="text-2xl md:text-3xl font-serif text-gray-900 tracking-widest uppercase">
+                AURA
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex space-x-12 items-center">
+                <a href="theme2-index.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">Ana Sayfa</a>
+                <a href="theme2-products.html" class="text-gray-900 border-b border-gray-900 pb-1 text-sm tracking-widest uppercase mb-1">Koleksiyon</a>
+                <a href="theme2-contact.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">İletişim</a>
+
+                <button id="cart-toggle-btn" class="relative group p-2">
+                    <i class="ph ph-shopping-bag text-xl text-gray-900 transition-transform group-hover:scale-110"></i>
+                    <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                </button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <div class="flex items-center space-x-4 md:hidden">
+                <button class="cart-toggle-btn relative p-2">
+                    <i class="ph ph-shopping-bag text-2xl text-gray-900"></i>
+                    <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="text-gray-900">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU (Full screen) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-gray-900">
+            <i class="ph ph-x text-3xl"></i>
+        </button>
+        <div class="flex flex-col space-y-8 text-center">
+            <a href="theme2-index.html" class="text-3xl font-serif text-gray-900 tracking-wider">Ana Sayfa</a>
+            <a href="theme2-products.html" class="text-3xl font-serif text-gray-900 tracking-wider underline underline-offset-8 font-bold">Koleksiyon</a>
+            <a href="theme2-contact.html" class="text-3xl font-serif text-gray-900 tracking-wider">İletişim</a>
+        </div>
+    </div>
+
+
+    <!-- PAGE HEADER & FILTERS -->
+    <header class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 text-center reveal">
+            <h1 class="text-4xl md:text-6xl font-serif text-gray-900 mb-6">Tüm Koleksiyon</h1>
+            <p class="text-gray-500 max-w-2xl mx-auto mb-16">Evinizin karakterini belirleyecek, ustalıkla tasarlanmış parçaları keşfedin.</p>
+            
+            <!-- Category Tabs -->
+            <div class="flex flex-wrap justify-center gap-8 border-b border-gray-200 pb-4" id="t2-category-filters">
+                <button onclick="filterProducts('all')" class="cat-btn active text-sm tracking-widest uppercase text-gray-900 font-medium" data-cat="all">Tümü</button>
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- PRODUCT GRID -->
+    <section class="py-16 bg-[#FAFAFA] min-h-[50vh]">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div id="t2-product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+                <!-- Products dynamically inserted here -->
+                <div class="col-span-full text-center py-20 text-gray-500">Koleksiyon yükleniyor...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            <div>
+                <h3 class="font-serif text-3xl mb-6">AURA</h3>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-sm">Premium mobilyalarla yaşam alanlarınıza değer katıyoruz. Tasarımın saflığı ve kalitenin buluşma noktası.</p>
+            </div>
+            <div>
+                <h4 class="uppercase tracking-widest text-xs font-medium mb-6 text-gray-500">Hızlı Linkler</h4>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li><a href="theme2-products.html" class="hover:text-white transition-colors">Koleksiyon</a></li>
+                    <li><a href="theme2-contact.html" class="hover:text-white transition-colors">İletişim</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="uppercase tracking-widest text-xs font-medium mb-6 text-gray-500">İletişim</h4>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li id="f-address">Nişantaşı, İstanbul</li>
+                    <li id="f-email">info@auramobilya.com</li>
+                    <li id="f-phone">+90 555 123 45 67</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 border-t border-white/10 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+            <p>&copy; 2026 AURA Mobilya. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- STICKY WHATSAPP CTA -->
+    <a id="f-whatsapp-btn" href="https://wa.me/905551234567?text=Merhaba,%20AURA%20koleksiyonunuz%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group">
+        <i class="ph ph-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 50;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        });
+        document.getElementById('close-menu-btn').addEventListener('click', () => {
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        //  DYNAMIC PRODUCT DATA
+        // ═══════════════════════════════════════════════════════════════
+        let allProducts = [];
+        let allCategories = [];
+        let activeFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await ShopCore.loadCache();
+            await loadCategories();
+            loadProducts();
+            
+            // Check for category in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const catParam = urlParams.get('category');
+            if (catParam) {
+                // Wait slightly for DOM injection
+                setTimeout(() => filterProducts(catParam), 100);
+            }
+        });
+
+        async function loadCategories() {
+            try {
+                allCategories = await ShopCore.fetchCategories();
+                if (allCategories && allCategories.length) {
+                    const tabsContainer = document.getElementById('t2-category-filters');
+                    
+                    let html = `<button onclick="filterProducts('all')" class="cat-btn active text-sm tracking-widest uppercase text-gray-900 font-medium" data-cat="all">Tümü</button>`;
+                    
+                    allCategories.forEach(cat => {
+                        const id = typeof cat === 'string' ? cat : cat.id;
+                        const name = typeof cat === 'string' ? cat : cat.name;
+                        html += `<button onclick="filterProducts('${id}')" class="cat-btn text-sm tracking-widest uppercase text-gray-400 hover:text-gray-900 transition-colors" data-cat="${id}">${name}</button>`;
+                    });
+                    tabsContainer.innerHTML = html;
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function loadProducts() {
+            try {
+                allProducts = ShopCore.getProducts();
+                if (allProducts && allProducts.length) {
+                    renderGrid();
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function filterProducts(catId) {
+            activeFilter = catId;
+            
+            // Update active states
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if(btn.dataset.cat === catId) {
+                    btn.classList.add('text-gray-900', 'font-medium');
+                    btn.classList.remove('text-gray-400');
+                } else {
+                    btn.classList.remove('text-gray-900', 'font-medium');
+                    btn.classList.add('text-gray-400');
+                }
+            });
+
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('t2-product-grid');
+            
+            let filtered = allProducts;
+            if (activeFilter !== 'all') {
+                filtered = allProducts.filter(p => p.category === activeFilter);
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-20 text-center text-gray-400 font-serif text-xl reveal">Bu kategoride henüz ürün bulunmuyor.</div>`;
+            } else {
+                container.innerHTML = filtered.map((p, index) => {
+                    const imgUrl = (p.images && p.images.length > 0) ? p.images[0] : 'https://via.placeholder.com/600';
+                    const delay = (index % 4) * 100;
+                    const link = StoreLogic.getProductLink(p);
+                    const priceStr = StoreLogic.formatCurrency(p.price);
+                    
+                    return `
+                        <div class="group reveal" style="transition-delay: ${delay}ms">
+                            <a href="${link}" class="block aspect-square overflow-hidden bg-gray-100 mb-6 img-zoom-container rounded-2xl relative shadow-sm border border-gray-100">
+                                <img src="${imgUrl}" class="w-full h-full object-cover" alt="${p.name}">
+                                
+                                <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                                    <div class="bg-gray-900 text-white text-[10px] font-bold uppercase tracking-widest px-8 py-3 rounded-full scale-90 group-hover:scale-100 transition-transform">
+                                        Detayları Gör
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="space-y-1">
+                                <h3 class="text-base font-serif text-gray-900 group-hover:text-aura-gold transition-colors">${p.name}</h3>
+                                <p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest font-bold opacity-60">${getCategoryName(p.category)}</p>
+                                <div class="flex justify-between items-center mt-3">
+                                    <p class="text-sm font-bold text-gray-900">${priceStr}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            // Trigger animation for newly injected items
+            setTimeout(reveal, 50);
+            reveal(); // Initial call as well
+        }
+
+        function getCategoryName(catId) {
+            if (!allCategories || allCategories.length === 0) return catId;
+            const cat = allCategories.find(c => (typeof c === 'string' ? c : c.id) === catId);
+            return cat ? (typeof cat === 'string' ? cat : cat.name) : catId;
+        }
+
+    </script>
+</body>
+</html>

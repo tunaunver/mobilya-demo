@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Nosh Sandalye",
+    "category": "Oturma Grupları",
+    "price": 450.00,
+    "image": "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=600",
+    "isNew": true
+  },
+  {
+    "id": "2",
+    "name": "Meşe Yemek Masası",
+    "category": "Masalar",
+    "price": 1200.00,
+    "image": "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=600",
+    "isNew": false
+  },
+  {
+    "id": "3",
+    "name": "Bulut Koltuk",
+    "category": "Oturma Grupları",
+    "price": 2450.00,
+    "image": "https://images.unsplash.com/photo-1507133750070-4ed3b22e17e6?auto=format&fit=crop&q=80&w=600",
+    "isNew": false
+  },
+  {
+    "id": "4",
+    "name": "Pirinç Zemin Lambası",
+    "category": "Aydınlatma",
+    "price": 320.00,
+    "image": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600",
+    "isNew": false
+  },
+  {
+    "id": "5",
+    "name": "Ceviz Konsol",
+    "category": "Masalar",
+    "price": 1850.00,
+    "image": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=600",
+    "isNew": false
+  },
+  {
+    "id": "6",
+    "name": "Bar Taburesi",
+    "category": "Oturma Grupları",
+    "price": 280.00,
+    "image": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=600",
+    "isNew": false
+  }
+]

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda | AURA Modern Lüks Mobilya</title>
+    <meta name="description" content="AURA'nın minimalist ve lüks mobilyalarının arkasındaki hikayeyi keşfedin.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        accent: {
+                            100: '#f4f1ed',
+                            200: '#e3dccf',
+                            500: '#c5b79f',
+                            900: '#3e3831',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- SEO Manager -->
+    <script src="js/seo-manager.js"></script>
+    <!-- Auth & Logic -->
+    <script src="js/auth-manager.js"></script>
+    <script src="js/nav-auth.js"></script>
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center md:hidden">
+                    <button type="button" class="text-gray-900 hover:text-gray-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-gray-900">AURA</a>
+                </div>
+                <div class="hidden md:ml-10 md:flex md:space-x-8">
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Ana Sayfa</a>
+                    <a href="products.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Ürünler</a>
+                    <a href="about.html" class="text-gray-900 border-b-2 border-gray-900 px-1 pt-1 text-sm font-medium transition-colors">Hakkımızda</a>
+                    <a href="contact.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">İletişim</a>
+                </div>
+                <!-- Icons -->
+                <div class="flex items-center space-x-6">
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors relative">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-gray-900 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <a href="#" class="hidden sm:inline-block text-gray-900 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative w-full h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+        <img id="about-hero-img" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000" alt="About AURA" class="absolute inset-0 w-full h-full object-cover object-center opacity-90">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative z-10 text-center px-4 max-w-3xl mx-auto">
+            <h1 id="about-hero-title" class="text-5xl md:text-6xl font-serif text-white mb-6">Hikayemiz</h1>
+            <p id="about-hero-subtitle" class="text-lg md:text-xl text-white/90 font-light">
+                Tasarım aracılığıyla huzur yaratmak.
+            </p>
+        </div>
+    </div>
+
+    <!-- The Philosophy -->
+    <section class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 id="about-phil-quote" class="text-3xl md:text-5xl font-serif text-gray-900 mb-10 leading-tight">
+                "Etrafımızı saran nesnelerin iç huzurumuzu derinden etkilediğine inanıyoruz."
+            </h2>
+            <p id="about-phil-desc" class="text-gray-600 font-light text-lg leading-relaxed text-left md:text-center">
+                2026 yılında kurulan AURA, gereksiz olanı atıp temele odaklanma arzusundan doğdu. Hızlı tüketim mobilyalarıyla dolup taşan bir dünya gördük ve buna bir chare bulmak istedik: Anlamlı tasarlanmış, nesiller boyu dayanacak şekilde üretilmiş ve her mekanı yüceltecek sessiz bir güzelliğe sahip parçalar.
+            </p>
+        </div>
+    </section>
+
+    <!-- Image + Text Block -->
+    <section class="py-16 bg-accent-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="w-full lg:w-1/2 order-2 lg:order-1 content-center">
+                    <h2 id="about-craft-title" class="text-3xl md:text-4xl font-serif text-gray-900 mb-6">Sürdürülebilir İşçilik</h2>
+                    <p id="about-craft-desc1" class="text-gray-600 font-light text-lg mb-6 leading-relaxed">
+                        AURA'nın her bir mobilya parçası hayata sorumlu şekilde tedarik edilen malzemelerle başlar. Çevresel ayak izimizin tasarımlarımız kadar minimal kalmasını sağlamak için doğrudan sürdürülebilir ormanlar ve etik tedarikçilerle ortaklık kuruyoruz.
+                    </p>
+                    <p id="about-craft-desc2" class="text-gray-600 font-light text-lg leading-relaxed">
+                        Usta zanaatkarlarımız, hassas mühendisliğin yanı sıra zamana meydan okuyan doğrama tekniklerini kullanıyor. Bu titiz yaklaşım, bir AURA parçasının yalnızca ilk gün güzel kalmasını değil, zaman geçtikçe daha da seçkinleşmesini garanti eder.
+                    </p>
+                </div>
+                <div class="w-full lg:w-1/2 order-1 lg:order-2">
+                    <img id="about-craft-img" src="https://images.unsplash.com/photo-1596079890744-c1a0462d0975?auto=format&fit=crop&q=80&w=1000" alt="Craftsmanship" class="w-full h-auto object-cover aspect-square">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Grid -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif text-gray-900 mb-4">Temel Değerlerimiz</h2>
+                <div class="w-16 h-px bg-gray-900 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <div class="w-12 h-12 border border-gray-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-serif text-gray-900 mb-4">Sadelik</h3>
+                    <p class="text-gray-600 font-light">Mobilyalarımızın gerçek formunu ve işlevini ortaya çıkarmak için gereksiz olandan arınmak.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 border border-gray-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-serif text-gray-900 mb-4">Uzun Ömür</h3>
+                    <p class="text-gray-600 font-light">Trendleri aşan ve nesiller boyu günlük hayatın zorluklarına dayanan parçalar tasarlamak.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 border border-gray-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-serif text-gray-900 mb-4">Sorumluluk</h3>
+                    <p class="text-gray-600 font-light">Etik tedarik, sürdürülebilir uygulamalara bağlı kalarak çevresel etkimizi en aza indirmek.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-auto py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-light">
+                <p>&copy; 2026 AURA Mobilya. Tüm hakları saklıdır.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="index.html" class="hover:text-white transition-colors">Ana Sayfa</a>
+                    <a href="contact.html" class="hover:text-white transition-colors">İletişim</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const THEME_STORE_KEY = 'aura_theme_settings';
+            const stored = localStorage.getItem(THEME_STORE_KEY);
+            if (!stored) return;
+
+            const settings = JSON.parse(stored);
+            let activeTheme = null;
+
+            if (settings.themes && settings.activeThemeId) {
+                activeTheme = settings.themes.find(t => t.id === settings.activeThemeId) || settings.themes[0];
+            } else if (settings.hero || settings.story) {
+                activeTheme = settings;
+            }
+
+            if (!activeTheme || !activeTheme.about) return;
+
+            const a = activeTheme.about;
+            const setMultiline = (id, text) => {
+                const el = document.getElementById(id);
+                if (el && text) el.innerHTML = text.replace(/\n|\\n/g, '<br>');
+            };
+
+            const setImg = (id, src) => {
+                const el = document.getElementById(id);
+                if (el && src) el.src = src;
+            };
+
+            setImg('about-hero-img', a.heroImg);
+            setMultiline('about-hero-title', a.heroTitle);
+            setMultiline('about-hero-subtitle', a.heroSubtitle);
+            
+            setMultiline('about-phil-quote', a.philQuote);
+            setMultiline('about-phil-desc', a.philDesc);
+
+            setMultiline('about-craft-title', a.craftTitle);
+            setMultiline('about-craft-desc1', a.craftDesc1);
+            setMultiline('about-craft-desc2', a.craftDesc2);
+            setImg('about-craft-img', a.craftImg);
+        });
+    </script>
+</body>
+</html>

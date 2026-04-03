@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Tasarım Modülü</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: { aura: { gold: '#C5A880', dark: '#1A1A1A', light: '#F9F9F9' } }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="js/shop-core.js"></script>
+    <script src="js/store-logic.js?v=1.1"></script>
+    <script src="js/cart-ui.js"></script>
+    
+    <style>
+        body { background-color: #FAFAFA; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+        .module-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .module-card:hover { transform: translateY(-4px); }
+        .module-card.selected { border-color: #1A1A1A; background-color: #fff; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e5e5e5; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #d1d1d1; }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="theme2-index.html" class="text-2xl md:text-3xl font-serif text-gray-900 tracking-widest uppercase">AURA</a>
+            <div class="hidden md:flex space-x-12 items-center">
+                <a href="theme2-index.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors">Ana Sayfa</a>
+                <a href="theme2-products.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors">Koleksiyon</a>
+                <a href="theme2-contact.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors">İletişim</a>
+
+                <button id="cart-toggle-btn" class="relative group p-2">
+                    <i class="ph ph-shopping-bag text-xl text-gray-900 transition-transform group-hover:scale-110"></i>
+                    <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                </button>
+            </div>
+            <!-- Mobile Toggle -->
+            <div class="flex items-center space-x-4 md:hidden">
+                <button class="cart-toggle-btn relative p-2">
+                    <i class="ph ph-shopping-bag text-2xl text-gray-900"></i>
+                    <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="text-gray-900">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-gray-900">
+            <i class="ph ph-x text-3xl"></i>
+        </button>
+        <div class="flex flex-col space-y-8 text-center">
+            <a href="theme2-index.html" class="text-3xl font-serif text-gray-900 tracking-wider">Ana Sayfa</a>
+            <a href="theme2-products.html" class="text-3xl font-serif text-gray-900 tracking-wider">Koleksiyon</a>
+            <a href="theme2-contact.html" class="text-3xl font-serif text-gray-900 tracking-wider">İletişim</a>
+        </div>
+    </div>
+
+    <!-- CONFIGURATOR LAYOUT -->
+    <main class="pt-[72px] md:pt-20 min-h-screen flex flex-col lg:flex-row">
+        
+        <!-- LEFT: Visualizer / Preview -->
+        <div class="w-full lg:w-3/5 bg-gray-50 p-6 md:p-12 lg:p-20 flex flex-col items-center justify-center sticky top-20 h-[50vh] lg:h-[calc(100vh-80px)]">
+            <div class="relative w-full max-w-2xl aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 group">
+                <img id="main-preview" src="https://via.placeholder.com/1200x900" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Preview">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                <div class="absolute bottom-8 left-8 text-white">
+                    <p id="preview-category" class="text-[10px] uppercase tracking-[0.3em] font-bold opacity-70 mb-2">Modüler Sistem</p>
+                    <h1 id="preview-name" class="text-3xl md:text-4xl font-serif">Yükleniyor...</h1>
+                </div>
+            </div>
+            
+            <!-- Summary Stats -->
+            <div class="mt-8 flex space-x-12 text-center reveal">
+                <div>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">Toplam Parça</p>
+                    <p id="total-parts" class="text-2xl font-serif text-gray-900">0</p>
+                </div>
+                <div class="w-px h-10 bg-gray-200 mt-2"></div>
+                <div>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">Tahmini Teslimat</p>
+                    <p class="text-2xl font-serif text-gray-900">14 Gün</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Controls -->
+        <div class="w-full lg:w-2/5 bg-white p-6 md:p-12 lg:p-16 border-l border-gray-100 flex flex-col">
+            <div class="mb-12">
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-gray-400 mb-4">Sistemi Kişiselleştirin</h2>
+                <h3 class="text-2xl font-serif text-gray-900 mb-2">Modül Seçimi</h3>
+                <p class="text-sm text-gray-500">Kendi kombinasyonunuzu oluşturmak için aşağıdan modülleri seçin ve miktarlarını belirleyin.</p>
+            </div>
+
+            <!-- Modules Grid -->
+            <div id="modules-list" class="space-y-4 flex-grow overflow-y-auto pr-4 custom-scrollbar max-h-[500px] lg:max-h-none mb-12">
+                <!-- Modules injected here -->
+            </div>
+
+
+
+            <!-- Footer Section (Fixed/Sticky at Bottom) -->
+            <div class="pt-8 border-t border-gray-100 mt-auto">
+                <div class="flex justify-between items-center mb-6 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                    <span>Taban Ürün Bedeli</span>
+                    <span id="base-price-display" class="text-gray-900">₺0</span>
+                </div>
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Toplam Tutar</p>
+                        <p id="total-price" class="text-4xl font-serif text-gray-900">₺0</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-green-600 font-bold uppercase tracking-widest mb-1">Ücretsiz Nakliye</p>
+                        <p class="text-[10px] text-gray-400">Montaj Dahil</p>
+                    </div>
+                </div>
+                
+                <!-- Global Product Features -->
+                <div id="detail-features" class="space-y-4 mb-8 border-2 border-red-500 pt-8 mt-8">
+                    <!-- Dynamic Features will be injected here -->
+                </div>
+                <script>
+                    // Immediate call to ensure visibility
+                    if (window.StoreLogic) {
+                        StoreLogic.applyThemeToProductFeatures('detail-features');
+                    }
+                </script>
+
+                <div class="mt-8">
+                    <button onclick="addToCartWithConfig()" class="w-full bg-gray-900 text-white font-bold uppercase tracking-[0.2em] text-xs py-6 rounded-2xl hover:bg-aura-gold transition-all shadow-xl hover:shadow-aura-gold/20 flex items-center justify-center space-x-3">
+                        <i class="ph ph-shopping-bag text-xl"></i>
+                        <span>Konfigürasyonu Sepete Ekle</span>
+                    </button>
+                    <p class="text-[10px] text-gray-400 text-center mt-6 uppercase tracking-[0.2em] font-bold">Kaydetmek için sepetinize ekleyebilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentProduct = null;
+        let selectedModules = []; // { moduleId, qty }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                });
+            }
+            if (closeBtn && mobileMenu) {
+                closeBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                });
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                loadConfigurator(id);
+            } else {
+                window.location.href = 'theme2-products.html';
+            }
+        });
+
+        function loadConfigurator(id) {
+            const products = ShopCore.getProducts();
+            currentProduct = products.find(p => p.id === id);
+            const isConfig = currentProduct && (currentProduct.type === 'modular' || currentProduct.type === 'configurator');
+            if (!currentProduct || !isConfig) {
+                window.location.href = 'theme2-products.html';
+                return;
+            }
+
+            // Set UI
+            document.getElementById('preview-name').innerText = currentProduct.name;
+            document.getElementById('preview-category').innerText = currentProduct.category;
+            if (currentProduct.images && currentProduct.images[0]) {
+                document.getElementById('main-preview').src = currentProduct.images[0];
+            }
+            document.getElementById('base-price-display').innerText = StoreLogic.formatCurrency(currentProduct.price || 0);
+
+            // Load Default Configuration (Select available modules with qty 1 by default)
+            selectedModules = (currentProduct.modules || [])
+                .filter(m => (m.stock || 0) > 0)
+                .map(m => ({ moduleId: m.id, qty: 1 }));
+
+            renderModules();
+            updateTotal();
+        }
+
+        function addToCartWithConfig() {
+            if (!currentProduct) return;
+            const config = {
+                modules: selectedModules.map(s => {
+                    const m = (currentProduct.modules || []).find(mod => mod.id === s.moduleId);
+                    return {
+                        moduleId: s.moduleId,
+                        qty: s.qty,
+                        price: m ? m.price : 0,
+                        name: m ? m.name : 'Unknown'
+                    };
+                })
+            };
+            ShopCore.addToCart(currentProduct, config);
+            CartUI.toggle(true);
+        }
+
+        function generateWhatsApp() {
+            const allModules = currentProduct.modules || [];
+            let total = parseFloat(currentProduct.price) || 0;
+            let summaryTxt = "";
+
+            if (total > 0) {
+                summaryTxt += `- Taban Ürün Bedeli: ${StoreLogic.formatCurrency(total)}\n`;
+            }
+
+            selectedModules.forEach(s => {
+                const module = allModules.find(m => m.id === s.moduleId);
+                if (module) {
+                    total += module.price * s.qty;
+                    summaryTxt += `- ${module.name} (Adet: ${s.qty})\n`;
+                }
+            });
+
+            // Update WhatsApp Link
+            const theme = StoreLogic.getActiveTheme();
+            const waNo = (theme && theme.footer && theme.footer.whatsapp) ? theme.footer.whatsapp.replace(/\D/g, '') : '905551234567';
+            const message = `Merhaba, ${currentProduct.name} ürününü konfigüre ettim.\n\nSeçilen Modüller:\n${summaryTxt}\nToplam Tutar: ${StoreLogic.formatCurrency(total)}\n\nTeklif alabilir miyim?`;
+            window.open(`https://wa.me/${waNo}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function renderModules() {
+            const container = document.getElementById('modules-list');
+            const allModules = currentProduct.modules || [];
+            
+            if (allModules.length === 0) {
+                container.innerHTML = `<p class="text-sm text-gray-400 italic">Bu ürün için henüz modül tanımlanmamış.</p>`;
+                return;
+            }
+
+            container.innerHTML = allModules.map(m => {
+                const selection = selectedModules.find(s => s.moduleId === m.id);
+                const isSelected = !!selection;
+                const qty = isSelected ? selection.qty : 0;
+                const isStockFull = qty >= (m.stock || 0);
+                const isOutOfStock = (m.stock || 0) <= 0;
+
+                return `
+                    <div class="module-card group bg-gray-50/50 border border-gray-100 rounded-2xl p-4 flex items-center transition-all ${isSelected ? 'selected ring-1 ring-gray-900 bg-white shadow-sm' : ''} ${isOutOfStock ? 'opacity-50 grayscale pointer-events-none' : ''}">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-white border border-gray-100">
+                            <img src="${m.image || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4 flex-grow">
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-tighter">${m.name}</h4>
+                            <p class="text-xs text-aura-gold font-bold mt-1">${StoreLogic.formatCurrency(m.price)}</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">${m.stock || 0} Adet Stokta</p>
+                        </div>
+                        <div class="flex flex-col items-center space-y-2">
+                             ${isSelected ? `
+                                <div class="flex items-center bg-white border border-gray-200 rounded-full scale-90 transition-all">
+                                    <button onclick="updateQty('${m.id}', -1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 border-r border-gray-100"><i class="ph ph-minus"></i></button>
+                                    <span class="w-8 text-center text-xs font-bold font-serif">${qty}</span>
+                                    <button onclick="updateQty('${m.id}', 1)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 border-l border-gray-100 ${isStockFull ? 'opacity-20 cursor-not-allowed' : ''}" ${isStockFull ? 'disabled' : ''}><i class="ph ph-plus"></i></button>
+                                </div>
+                                <button onclick="toggleModule('${m.id}')" class="text-[10px] text-red-400 font-bold uppercase tracking-widest hover:text-red-600 transition-colors">Kaldır</button>
+                             ` : `
+                                <button onclick="toggleModule('${m.id}')" class="bg-gray-900 text-white text-[10px] font-bold uppercase tracking-widest px-6 py-2.5 rounded-full hover:bg-black hover:shadow-lg transition-all" ${isOutOfStock ? 'disabled' : ''}>
+                                    ${isOutOfStock ? 'Stokta Yok' : 'Ekle'}
+                                </button>
+                             `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleModule(id) {
+            const idx = selectedModules.findIndex(s => s.moduleId === id);
+            const module = (currentProduct.modules || []).find(m => m.id === id);
+            
+            if (idx === -1) {
+                if (module && (module.stock || 0) > 0) {
+                    selectedModules.push({ moduleId: id, qty: 1 });
+                }
+            } else {
+                selectedModules.splice(idx, 1);
+            }
+            renderModules();
+            updateTotal();
+        }
+
+        function updateQty(id, delta) {
+            const selection = selectedModules.find(s => s.moduleId === id);
+            const module = (currentProduct.modules || []).find(m => m.id === id);
+            
+            if (selection && module) {
+                const newQty = selection.qty + delta;
+                if (newQty >= 1 && newQty <= (module.stock || 0)) {
+                    selection.qty = newQty;
+                    renderModules();
+                    updateTotal();
+                }
+            }
+        }
+
+        function updateTotal() {
+            const allModules = currentProduct.modules || [];
+            let total = parseFloat(currentProduct.price) || 0;
+            let parts = 0;
+            let summaryTxt = "";
+
+            if (total > 0) {
+                summaryTxt += `- Taban Ürün Bedeli: ${StoreLogic.formatCurrency(total)}\n`;
+            }
+
+            selectedModules.forEach(s => {
+                const module = allModules.find(m => m.id === s.moduleId);
+                if (module) {
+                    total += module.price * s.qty;
+                    parts += s.qty;
+                    summaryTxt += `- ${module.name} (Adet: ${s.qty})\n`;
+                }
+            });
+
+            document.getElementById('total-price').innerText = StoreLogic.formatCurrency(total);
+            document.getElementById('total-parts').innerText = parts;
+
+            // Update WhatsApp Link
+            const theme = StoreLogic.getActiveTheme();
+            const waNo = (theme && theme.footer && theme.footer.whatsapp) ? theme.footer.whatsapp.replace(/\D/g, '') : '905551234567';
+            const message = `Merhaba, ${currentProduct.name} ürününü konfigüre ettim.\n\nSeçilen Modüller:\n${summaryTxt}\nToplam Tutar: ${StoreLogic.formatCurrency(total)}\n\nTeklif alabilir miyim?`;
+            document.getElementById('whatsapp-cta').href = `https://wa.me/${waNo}?text=${encodeURIComponent(message)}`;
+        }
+    </script>
+</body>
+</html>

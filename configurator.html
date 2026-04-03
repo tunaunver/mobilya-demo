@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Premium Konfigüratör | AURA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        aura: {
+                            gold: '#C5A880',
+                            dark: '#1A1A1A',
+                            light: '#F9F9F9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        #visualizer-container { cursor: grab; user-select: none; }
+        #visualizer-container:active { cursor: grabbing; }
+    </style>
+</head>
+<body class="bg-[#F9F9F9] font-sans text-aura-dark antialiased">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 py-6 px-12">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center text-sm uppercase tracking-widest font-medium">
+            <a href="index.html" class="text-2xl font-serif tracking-[0.3em]">AURA</a>
+            <div class="flex space-x-12">
+                <a href="index.html" class="hover:text-aura-gold transition-colors">Ana Sayfa</a>
+                <a href="products.html" class="hover:text-aura-gold transition-colors">Koleksiyon</a>
+                <i class="ph ph-shopping-bag text-xl"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Configurator Layout -->
+    <main class="pt-[88px] h-screen flex overflow-hidden">
+        
+        <!-- LEFT: Fixed Visualizer Area -->
+        <div class="w-1/2 lg:w-3/5 bg-white relative flex items-center justify-center p-20 border-r border-gray-100">
+            <!-- Product Header -->
+            <div class="absolute top-12 left-12">
+                <h1 id="product-name" class="text-4xl font-serif mb-2 text-gray-900 uppercase">Yükleniyor...</h1>
+                <div id="sku-display" class="text-[9px] font-black tracking-[0.3em] text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full inline-block">SKU-LOADING</div>
+                <p class="mt-8 text-sm text-gray-500 max-w-sm leading-relaxed">Tamamen kişiselleştirilebilir iç yapısı ve premium malzeme seçenekleriyle Aura Gardırop.</p>
+            </div>
+
+            <!-- Visualizer Container -->
+            <div id="visualizer-container" class="w-full h-full max-w-4xl max-h-[70vh] flex items-center justify-center">
+                <!-- 2.5D Visualizer injected here -->
+            </div>
+
+            <!-- Badge / Custom Info -->
+            <div class="absolute bottom-12 left-12 flex items-center space-x-4">
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-aura-gold border-b border-aura-gold/30 pb-1 mb-1">Özel İmalat</span>
+                    <span class="text-[9px] text-gray-400 uppercase tracking-widest">Tasarımlarınıza Göre Üretilir</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Scrollable Controls -->
+        <div class="w-1/2 lg:w-2/5 h-full overflow-y-auto bg-[#F9F9F9] custom-scrollbar pb-32">
+            <div class="p-16 max-w-2xl mx-auto space-y-16">
+                
+                <!-- SECTION 1: Temel Ölçüler -->
+                <section>
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-10">Temel Ölçüler</h2>
+                    <div class="space-y-12" id="dimension-sliders">
+                        <!-- Width -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-end">
+                                <label class="text-[10px] font-bold uppercase tracking-widest opacity-60">Genişlik</label>
+                                <span class="text-sm font-serif" id="width-val">0cm</span>
+                            </div>
+                            <input type="range" id="width-slider" class="w-full accent-aura-dark h-px bg-gray-200 appearance-none cursor-pointer">
+                        </div>
+                        <!-- Height -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-end">
+                                <label class="text-[10px] font-bold uppercase tracking-widest opacity-60">Yükseklik</label>
+                                <span class="text-sm font-serif" id="height-val">0cm</span>
+                            </div>
+                            <input type="range" id="height-slider" class="w-full accent-aura-dark h-px bg-gray-200 appearance-none cursor-pointer">
+                        </div>
+                        <!-- Depth -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-end">
+                                <label class="text-[10px] font-bold uppercase tracking-widest opacity-60">Derinlik</label>
+                                <span class="text-sm font-serif" id="depth-val">0cm</span>
+                            </div>
+                            <input type="range" id="depth-slider" class="w-full accent-aura-dark h-px bg-gray-200 appearance-none cursor-pointer">
+                        </div>
+                        <!-- Boundary Check Hint -->
+                        <div id="error-container" class="hidden pt-4 text-[10px] text-red-500 font-bold uppercase tracking-widest bg-red-50 p-4 rounded-xl border border-red-100"></div>
+                    </div>
+                </section>
+
+                <!-- SECTION 2: Bölme Sayısı & Bakış Açısı -->
+                    <div class="space-y-4">
+                        <label class="text-[10px] font-bold uppercase tracking-widest block opacity-60">Dolap Genişliği (Bölme Sayısı)</label>
+                        <div id="partition-buttons" class="flex gap-2 bg-gray-50 p-2 rounded-2xl border border-gray-100">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-end mb-4">
+                            <label class="text-[10px] font-bold uppercase tracking-widest opacity-60">Bakış Açısı (3D)</label>
+                            <span class="text-[10px] font-black text-aura-gold" id="rotation-val">-25°</span>
+                        </div>
+                        <input type="range" id="rotation-slider" min="-180" max="180" step="1" value="-25" class="w-full accent-aura-gold h-px bg-gray-200 appearance-none cursor-pointer hidden">
+                    </div>
+                </section>
+
+                <!-- SECTION 3: İç Yapı & Kapak Seçimi (Dinamik Alanlar) -->
+                <section>
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-10">İç Yapı & Kapak Seçimi</h2>
+                    <div id="partition-controls" class="space-y-8">
+                        <!-- Partition-specific controls will be injected here -->
+                    </div>
+                </section>
+
+                <!-- SECTION 4: Malzeme ve Renk -->
+                <section class="grid grid-cols-2 gap-12">
+                    <div>
+                        <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-8">Gövde Rengi</h2>
+                        <div id="color-options" class="flex flex-wrap gap-4"></div>
+                    </div>
+                    <div>
+                        <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-8">Malzeme</h2>
+                        <div id="material-options" class="flex flex-col gap-2"></div>
+                    </div>
+                </section>
+
+                 <!-- SECTION 5: Global Aksesuar -->
+                 <section>
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-8">Kulp Seçimi</h2>
+                    <div id="handle-options" class="grid grid-cols-2 gap-3">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Sticky Summary Footer -->
+        <div class="fixed bottom-0 right-0 w-1/2 lg:w-2/5 bg-white border-t border-gray-100 py-8 px-16 flex justify-between items-center z-50">
+            <div>
+                <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Toplam Tutar</p>
+                <div id="price-display" class="text-4xl font-serif text-gray-900">₺0</div>
+            </div>
+            <button onclick="addToCart()" class="bg-aura-dark text-white px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-aura-gold transition-all shadow-xl shadow-gray-200">
+                Sepete Ekle
+            </button>
+        </div>
+    </main>
+
+    <script src="js/shop-core.js"></script>
+    <script src="js/configurator.js"></script>
+    <script src="js/preview.js"></script>
+    <script>
+        let product = null;
+        let configurator = null;
+
+        async function init() {
+            try {
+                // Initialize ShopCore Cache (Fetch from MySQL API)
+                await ShopCore.loadCache();
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const targetId = urlParams.get('id');
+
+                // Use the new ShopCore methods
+                const allData = ShopCore.getProducts();
+                const configuratorProducts = allData.filter(p => p.type === 'configurator');
+                
+                if (targetId) {
+                    product = allData.find(p => p.id === targetId);
+                }
+                
+                if (!product || product.type !== 'configurator') {
+                    product = configuratorProducts[0];
+                }
+
+                if (!product) {
+                    document.getElementById('product-name').innerText = "Ürün Bulunamadı";
+                    document.getElementById('t2-hero-content-slider')?.remove();
+                    throw new Error("Hiç konfigüratör ürünü bulunamadı.");
+                }
+
+                configurator = window.createConfigurator(product);
+
+                // Setup Listeners
+                configurator.onUpdate(summary => {
+                    updateUI(summary);
+                    window.renderPreview(document.getElementById('visualizer-container'), summary);
+                });
+
+                setupControls();
+                // Specific dimensions if needed
+                if (product.dimensions && product.dimensions.width) {
+                    configurator.updateDimension('width', product.dimensions.width.default);
+                }
+            } catch (err) {
+                console.error("Yükleme hatası:", err);
+                document.getElementById('product-name').innerText = "Sistem Hatası";
+            }
+        }
+
+        function setupControls() {
+            // Dimension Sliders
+            ['width', 'height', 'depth'].forEach(type => {
+                const slider = document.getElementById(`${type}-slider`);
+                if (!slider || !product.dimensions || !product.dimensions[type]) return;
+                
+                const dim = product.dimensions[type];
+                slider.min = dim.min;
+                slider.max = dim.max;
+                slider.value = dim.default;
+                slider.oninput = (e) => configurator.updateDimension(type, e.target.value);
+            });
+
+            // Partition Buttons
+            const partContainer = document.getElementById('partition-buttons');
+            const minPart = product.rules?.minPartitions || 1;
+            const maxPart = product.rules?.maxPartitions || 4;
+            partContainer.innerHTML = '';
+            for (let i = minPart; i <= maxPart; i++) {
+                const btn = document.createElement('button');
+                btn.className = `flex-1 py-3 rounded-xl border text-[10px] font-bold transition-all p-btn`;
+                btn.id = `p-btn-${i}`;
+                btn.innerText = `${i} Bölme`;
+                btn.onclick = () => configurator.updatePartitionCount(i);
+                partContainer.appendChild(btn);
+            }
+
+            // Rotation (Drag + Slider Sync)
+            const rotSlider = document.getElementById('rotation-slider');
+            const rotVal = document.getElementById('rotation-val');
+            const vizContainer = document.getElementById('visualizer-container');
+            
+            let isDragging = false;
+            let startX = 0;
+            let startRotation = -25;
+            const sensitivity = 0.5;
+
+            const updateRotation = (val) => {
+                let numVal = parseFloat(val);
+                // Wrap value between -180 and 180
+                numVal = ((((numVal + 180) % 360) + 360) % 360) - 180;
+                let finalVal = Math.round(numVal);
+                
+                configurator.updateRotation(finalVal);
+                rotVal.innerText = `${finalVal}°`;
+                rotSlider.value = finalVal;
+            };
+
+            rotSlider.oninput = (e) => updateRotation(e.target.value);
+
+            // Mouse Events
+            vizContainer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startRotation = parseInt(rotSlider.value);
+                vizContainer.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.clientX - startX;
+                const newRotation = startRotation + (deltaX * sensitivity);
+                updateRotation(newRotation);
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                vizContainer.style.cursor = 'grab';
+            });
+
+            // Touch Events
+            vizContainer.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startRotation = parseInt(rotSlider.value);
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.touches[0].clientX - startX;
+                const newRotation = startRotation + (deltaX * sensitivity);
+                updateRotation(newRotation);
+            }, { passive: false });
+
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            // Colors
+            const colorContainer = document.getElementById('color-options');
+            product.colors.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = `w-10 h-10 rounded-full border-2 transition-all hover:scale-110`;
+                btn.style.backgroundColor = c.hex;
+                btn.title = c.name;
+                btn.setAttribute('data-id', c.id);
+                btn.onclick = () => {
+                   configurator.selectColor(c.id);
+                   document.querySelectorAll('#color-options button').forEach(b => b.classList.remove('border-aura-dark', 'scale-110'));
+                   btn.classList.add('border-aura-dark', 'scale-110');
+                };
+                colorContainer.appendChild(btn);
+            });
+
+            // Materials
+            const materialContainer = document.getElementById('material-options');
+            product.materials.forEach(m => {
+                const btn = document.createElement('button');
+                btn.className = `px-6 py-3 text-[10px] font-black uppercase tracking-widest border border-gray-200 hover:border-aura-dark transition-all rounded-lg text-left`;
+                btn.innerText = m.name;
+                btn.setAttribute('data-id', m.id);
+                btn.onclick = () => {
+                    configurator.selectMaterial(m.id);
+                    document.querySelectorAll('#material-options button').forEach(b => b.classList.remove('bg-aura-dark', 'text-white'));
+                    btn.classList.add('bg-aura-dark', 'text-white');
+                };
+                materialContainer.appendChild(btn);
+            });
+
+            // Handles (Yok / Standart Kulp)
+            const handleContainer = document.getElementById('handle-options');
+            handleContainer.innerHTML = `
+                <button id="h-btn-false" onclick="configurator.toggleHandles(false)" 
+                    class="py-3 rounded-xl border text-[10px] font-bold uppercase transition-all">
+                    Yok
+                </button>
+                <button id="h-btn-true" onclick="configurator.toggleHandles(true)" 
+                    class="py-3 rounded-xl border text-[10px] font-bold uppercase transition-all">
+                    Standart Kulp
+                </button>
+            `;
+        }
+
+        function updateUI(summary) {
+            const { configuration, totalPrice, sku } = summary;
+            
+            document.getElementById('product-name').innerText = product.name;
+            document.getElementById('sku-display').innerText = sku;
+            document.getElementById('price-display').innerText = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(totalPrice);
+            
+            document.getElementById('width-val').innerText = `${configuration.width}cm`;
+            document.getElementById('height-val').innerText = `${configuration.height}cm`;
+            document.getElementById('depth-val').innerText = `${configuration.depth}cm`;
+            
+            // Update Partition Buttons Active State
+            document.querySelectorAll('.p-btn').forEach(b => {
+                const idNum = parseInt(b.id.split('-').pop());
+                if (idNum === configuration.partitionCount) {
+                    b.classList.add('bg-aura-dark', 'text-white', 'border-aura-dark', 'shadow-md', 'scale-105');
+                    b.classList.remove('bg-white', 'text-gray-400', 'border-gray-100');
+                } else {
+                    b.classList.remove('bg-aura-dark', 'text-white', 'border-aura-dark', 'shadow-md', 'scale-105');
+                    b.classList.add('bg-white', 'text-gray-400', 'border-gray-100');
+                }
+            });
+
+            // Update Handle Buttons Active State
+            const hEnabled = configuration.handlesEnabled;
+            const btnTrue = document.getElementById('h-btn-true');
+            const btnFalse = document.getElementById('h-btn-false');
+            [btnTrue, btnFalse].forEach(b => {
+                const isSelected = (b.id === 'h-btn-true' && hEnabled) || (b.id === 'h-btn-false' && !hEnabled);
+                if (isSelected) {
+                    b.classList.add('bg-aura-dark', 'text-white', 'border-aura-dark', 'shadow-md');
+                    b.classList.remove('bg-white', 'text-gray-400', 'border-gray-100');
+                } else {
+                    b.classList.remove('bg-aura-dark', 'text-white', 'border-aura-dark', 'shadow-md');
+                    b.classList.add('bg-white', 'text-gray-400', 'border-gray-100');
+                }
+            });
+
+            renderPartitionControls(configuration);
+        }
+
+        function renderPartitionControls(config) {
+            const container = document.getElementById('partition-controls');
+            // Optimistic partial render or full based on count
+            if (container.children.length !== config.partitionCount) {
+                container.innerHTML = '';
+            }
+
+            for (let i = 1; i <= config.partitionCount; i++) {
+                const catKey = `partition_${i}`;
+                const data = config.selectedModules[catKey] || { id: 'none', shelfCount: 0, drawerCount: 0, doorModel: 'none' };
+                
+                let pDiv = document.getElementById(`p-ctrl-${i}`);
+                if (!pDiv) {
+                    pDiv = document.createElement('div');
+                    pDiv.id = `p-ctrl-${i}`;
+                    pDiv.className = 'bg-white p-8 rounded-3xl border border-gray-100 space-y-8';
+                    container.appendChild(pDiv);
+                }
+
+                const doorsEnabled = product.doorsEnabled !== false; // Default to true if not explicitly false
+                const doorModels = (product.doorModels && product.doorModels.length > 0) 
+                    ? product.doorModels 
+                    : [
+                        { id: 'plain', name: 'Düz Kapak' },
+                        { id: 'mirrored', name: 'Aynalı Kapak' }
+                    ];
+
+                pDiv.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40">${i}. Bölme Alanı</h3>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-bold uppercase tracking-widest block opacity-60">İç Modül</label>
+                            <div class="flex gap-2">
+                                <button onclick="configurator.selectModuleType('none', '${catKey}')" class="px-4 py-2 text-[8px] border rounded-lg font-black uppercase ${data.id === 'none' || !data.id ? 'bg-black text-white' : 'bg-white'}">Boş</button>
+                                <button onclick="configurator.selectModuleType('hanger', '${catKey}')" class="px-4 py-2 text-[8px] border rounded-lg font-black uppercase ${data.id === 'hanger' ? 'bg-black text-white' : 'bg-white'}">Askı</button>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8">
+                            <div class="text-center">
+                                <span class="block text-[8px] font-bold uppercase opacity-40 mb-2">Raf</span>
+                                <div class="flex items-center bg-gray-50 rounded-full p-1 border border-gray-100">
+                                    <button onclick="configurator.updateModuleCount('${catKey}', -1, 'shelf')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full transition-all">-</button>
+                                    <span class="w-8 text-[10px] font-bold">${data.shelfCount || 0}</span>
+                                    <button onclick="configurator.updateModuleCount('${catKey}', 1, 'shelf')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full transition-all">+</button>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-[8px] font-bold uppercase opacity-40 mb-2">Çekmece</span>
+                                <div class="flex items-center bg-gray-50 rounded-full p-1 border border-gray-100">
+                                    <button onclick="configurator.updateModuleCount('${catKey}', -1, 'drawer')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full transition-all">-</button>
+                                    <span class="w-8 text-[10px] font-bold">${data.drawerCount || 0}</span>
+                                    <button onclick="configurator.updateModuleCount('${catKey}', 1, 'drawer')" class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full transition-all">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${doorsEnabled ? `
+                    <div class="pt-8 border-t border-gray-50">
+                        <label class="text-[10px] font-bold uppercase tracking-widest block mb-4 opacity-60">Kapak Modeli</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="configurator.selectModuleType('none', '${catKey}', 'door')" 
+                                    class="px-4 py-3 border rounded-xl text-[8px] font-black uppercase tracking-widest text-left transition-all hover:border-aura-dark 
+                                    ${data.doorModel === 'none' || !data.doorModel ? 'bg-aura-dark text-white' : 'bg-white text-gray-400'}">
+                                Açık (Kapak Yok)
+                            </button>
+                            ${doorModels.filter(dm => dm.id !== 'none').map(dm => `
+                                <button onclick="configurator.selectModuleType('${dm.id}', '${catKey}', 'door')" 
+                                        class="px-4 py-3 border rounded-xl text-[8px] font-black uppercase tracking-widest text-left transition-all hover:border-aura-dark 
+                                        ${data.doorModel === dm.id ? 'bg-aura-dark text-white' : 'bg-white text-gray-500'}">
+                                    ${dm.name}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                `;
+            }
+        }
+
+        function addToCart() {
+            const summary = configurator.getSummary();
+            
+            // Prepare cart item
+            const cartItem = {
+                id: product.id,
+                name: product.name,
+                image: (product.images && product.images.length > 0) ? product.images[0] : 'https://via.placeholder.com/200',
+                price: summary.totalPrice,
+                totalPrice: summary.totalPrice,
+                qty: 1,
+                type: 'configurator',
+                config: {
+                    sku: summary.sku,
+                    customDimensions: `${summary.configuration.width}x${summary.configuration.height}x${summary.configuration.depth} cm`,
+                    details: summary.configuration
+                }
+            };
+
+            ShopCore.addToCart(cartItem);
+            
+            // Open Cart Sidebar
+            if (window.CartUI) {
+                CartUI.toggle(true);
+            } else {
+                alert("Ürün sepete eklendi!");
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

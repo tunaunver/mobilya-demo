@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı | AURA Modern Lüks Mobilya</title>
+    <meta name="description" content="AURA - Modern lüks mobilya ürün detay sayfası.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- SEO Manager -->
+    <script src="js/seo-manager.js"></script>
+    <script src="js/shop-core.js"></script>
+    <!-- Auth & Logic -->
+    <script src="js/auth-manager.js"></script>
+    <script src="js/nav-auth.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        accent: {
+                            100: '#f4f1ed',
+                            200: '#e3dccf',
+                            500: '#c5b79f',
+                            900: '#3e3831',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .thumb-active { border-color: #111827 !important; }
+        #main-product-image { transition: opacity 0.25s ease; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center md:hidden">
+                    <button type="button" class="text-gray-900 hover:text-gray-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-gray-900">AURA</a>
+                </div>
+                <div class="hidden md:ml-10 md:flex md:space-x-8">
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Ana Sayfa</a>
+                    <a href="products.html" class="text-gray-900 border-b-2 border-gray-900 px-1 pt-1 text-sm font-medium transition-colors">Ürünler</a>
+                    <a href="about.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Hakkımızda</a>
+                    <a href="contact.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">İletişim</a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors relative">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-gray-900 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <a href="#" class="hidden sm:inline-block text-gray-900 hover:text-gray-600 transition-colors" title="Üye Girişi">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <nav class="flex text-sm text-gray-500 font-light" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="index.html" class="hover:text-gray-900 transition-colors">Ana Sayfa</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <span class="mx-2">/</span>
+                        <a href="products.html" id="breadcrumb-category" class="hover:text-gray-900 transition-colors">Ürünler</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <span class="mx-2">/</span>
+                        <span class="text-gray-900" id="breadcrumb-name">...</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Product Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+        <div class="flex flex-col lg:flex-row lg:gap-16 gap-10">
+
+            <!-- Product Images -->
+            <div class="w-full lg:w-3/5 flex gap-4">
+                <!-- Thumbnails (desktop only) -->
+                <div id="thumbs-col" class="hidden md:flex flex-col gap-4 w-24 flex-shrink-0">
+                    <!-- filled by JS -->
+                </div>
+                <!-- Main Image -->
+                <div class="flex-1 bg-gray-100 relative">
+                    <img id="main-product-image"
+                         src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=1200"
+                         alt="Ürün görseli"
+                         class="w-full h-full object-cover object-center aspect-[4/5] lg:aspect-auto">
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="w-full lg:w-2/5">
+                <span id="detail-category" class="text-sm text-gray-500 font-light tracking-widest uppercase mb-2 block"></span>
+                <h1 id="detail-name" class="text-4xl md:text-5xl font-serif text-gray-900 mb-4"></h1>
+                <p id="detail-price" class="text-2xl text-gray-900 font-light mb-8"></p>
+
+                <p id="detail-desc" class="text-gray-600 font-light leading-relaxed mb-8"></p>
+
+                <!-- Add to Cart (Dynamic Content Based on Stock) -->
+                <div id="detail-action-area" class="flex space-x-4 mb-8">
+                     <!-- Populated by JS -->
+                </div>
+
+                <div id="detail-features" class="space-y-4 mb-12">
+                    <!-- Global Features Dynamic -->
+                </div>
+
+                <!-- Accordions -->
+                <div class="border-t border-gray-200">
+                    <details class="group cursor-pointer">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none py-4 text-gray-900 hover:text-gray-600 transition-colors">
+                            <span>Boyutlar ve Detaylar</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 font-light text-sm mt-3 pb-4">
+                            <ul id="detail-dims" class="space-y-2"></ul>
+                        </div>
+                    </details>
+                    <details class="group cursor-pointer border-t border-gray-200">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none py-4 text-gray-900 hover:text-gray-600 transition-colors">
+                            <span>Bakım Talimatları</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 font-light text-sm mt-3 pb-4">
+                            Temiz, hafif nemli ve tüy bırakmayan bir bezle sık sık tozunu alın. Dökülenleri derhal temiz, kuru bir bezle silin. Cilaya zarar verebileceğinden temizleyici veya aşındırıcı maddeler kullanmaktan kaçının.
+                        </div>
+                    </details>
+                    <details class="group cursor-pointer border-t border-gray-200">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none py-4 text-gray-900 hover:text-gray-600 transition-colors">
+                            <span>Kargo ve İadeler</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 font-light text-sm mt-3 pb-4">
+                            Genellikle 2-3 hafta içinde kargoya verilir. Teslimattan itibaren 30 gün içinde iadeleri kabul ediyoruz. İade kargo ücretleri uygulanabilir.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <section class="py-24 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-serif text-gray-900 mb-12 text-center">Şunlar Da Hoşunuza Gidebilir</h2>
+            <div id="related-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                <!-- filled by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-auto py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="lg:col-span-1">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-white block mb-6">AURA</a>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">Modern evler için olağanüstü, minimalist parçaların kürasyonu.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Alışveriş</h4>
+                    <ul class="space-y-4">
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Tüm Ürünler</a></li>
+                        <li><a href="products.html?category=Oturma+Grupları" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Oturma Grupları</a></li>
+                        <li><a href="products.html?category=Masalar" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Masalar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Destek</h4>
+                    <ul class="space-y-4">
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Bize Ulaşın</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm font-light">SSS</a></li>
+                    </ul>
+                </div>
+                <div class="lg:col-span-1">
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Bülten</h4>
+                    <p class="text-gray-400 text-sm font-light mb-4">Güncellemelerden haberdar olmak için abone olun.</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="E-posta adresinizi girin" class="bg-gray-800 border-none text-white px-4 py-3 text-sm focus:ring-1 focus:ring-white outline-none w-full" required>
+                        <button type="submit" class="bg-white text-gray-900 border border-white hover:bg-transparent hover:text-white px-4 py-3 text-sm font-medium tracking-widest uppercase transition-colors w-full">Abone Ol</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-light">
+                <p>&copy; 2026 AURA Mobilya. Tüm hakları saklıdır.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="index.html" class="hover:text-white transition-colors">Ana Sayfa</a>
+                    <a href="products.html" class="hover:text-white transition-colors">Ürünler</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // ── Static data ──────────────────────────────────────────────────────────
+    const FALLBACK_PRODUCTS = [
+        { id:"1", name:"Nosh Sandalye",       category:"Oturma Grupları", price:450.00,  images:["https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=600"], isNew:true  },
+        { id:"2", name:"Meşe Yemek Masası",   category:"Masalar",         price:1200.00, images:["https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=600"], isNew:false },
+        { id:"3", name:"Bulut Koltuk",         category:"Oturma Grupları", price:2450.00, images:["https://images.unsplash.com/photo-1507133750070-4ed3b22e17e6?auto=format&fit=crop&q=80&w=600"], isNew:false },
+        { id:"4", name:"Pirinç Zemin Lambası", category:"Aydınlatma",      price:320.00,  images:["https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"], isNew:false },
+        { id:"5", name:"Ceviz Konsol",         category:"Masalar",         price:1850.00, images:["https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=600"], isNew:false },
+        { id:"6", name:"Bar Taburesi",         category:"Oturma Grupları", price:280.00,  images:["https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=600"], isNew:false }
+    ];
+
+    // GALLERIES removal handled by dynamic usage of product.images
+
+    const DESCRIPTIONS = {
+        "1": "Masif meşeden kusursuz doğramalarla üretilen Nosh Sandalye, geleneksel ahşap işçiliği tekniklerini şık ve minimalist bir siluetle harmanlıyor. Hem yemek masası hem de günlük kullanım için tasarlanan kavisli sırtlığı olağanüstü bir konfor sunuyor.",
+        "2": "Masif meşenin doğal dokusunu ön plana çıkaran bu yemek masası, sade çizgileri ve sağlam yapısıyla yıllar boyunca evinizin odak noktası olmaya devam eder. 6-8 kişilik kullanıma uygundur.",
+        "3": "Bulut Koltuk, adından da anlaşıldığı üzere oturduğunuzda bulutlar üzerinde süzülüyormuş hissi verir. Üst kalite köpük dolgusu ve premium kumaşıyla hem şık hem de son derece konforlu bir oturma deneyimi sunar.",
+        "4": "Pirinç detayları ve mat siyah gövdesiyle bu zemin lambası, modern lüks estetiğinin simgesi. Ayarlanabilir başlığı sayesinde ışığı istediğiniz yöne yönlendirebilirsiniz.",
+        "5": "Ceviz ağacının zengin dokusundan ilham alan bu konsol, giriş holü veya oturma odanız için mükemmel bir depolama ve sergileme çözümü sunar. İnce profiliyle dar alanlarda da kolaylıkla kullanılabilir.",
+        "6": "Minimalist tasarımı ve yüksek kaliteli malzemeleriyle bu bar taburesi, mutfak tezgahlarına ve yemek barlarına zarif bir dokunuş katar. İskandinav tasarımından ilham alan formu her dekorla uyum sağlar."
+    };
+
+    const DIMENSIONS = {
+        "1": ["Yükseklik: 81 cm","Genişlik: 50 cm","Derinlik: 55 cm","Oturma Yüksekliği: 45 cm","Malzemeler: Masif Beyaz Meşe, Mat Su Bazlı Lake"],
+        "2": ["Yükseklik: 76 cm","Genişlik: 220 cm","Derinlik: 100 cm","Kapasite: 6-8 Kişilik","Malzemeler: Masif Meşe, Doğal Yağ Bitişi"],
+        "3": ["Yükseklik: 85 cm","Genişlik: 110 cm","Derinlik: 95 cm","Oturma Yüksekliği: 42 cm","Malzemeler: Premium Köpük, Dokuma Kumaş"],
+        "4": ["Yükseklik: 165 cm (ayarlanabilir)","Taban Çapı: 30 cm","Kablo Uzunluğu: 2 m","Güç: E27 Max 60W","Malzemeler: Pirinç, Demir, Mat Boyalı Çelik"],
+        "5": ["Yükseklik: 80 cm","Genişlik: 120 cm","Derinlik: 35 cm","Çekmece: 2 Adet","Malzemeler: Masif Ceviz, Metal Ayaklar"],
+        "6": ["Yükseklik: 75 cm","Oturma Çapı: 38 cm","Ayak Açıklığı: 45 cm","Maksimum Ağırlık: 120 kg","Malzemeler: Meşe, Krom Ayaklar"]
+    };
+
+    // ── Boot ─────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', async () => {
+        // 1. Get product id from URL
+        const params     = new URLSearchParams(window.location.search);
+        const productId  = params.get('id') || '1';
+        const STORE_KEY  = 'aura_products';
+
+        // 2. Load product list
+        let allProducts = [];
+        try {
+            allProducts = await ShopCore.fetchProducts();
+        } catch (e) {
+            console.error("ShopCore Load Error", e);
+            allProducts = FALLBACK_PRODUCTS;
+        }
+
+        // 3. Find the requested product (fall back to first if not found)
+        const product = allProducts.find(p => p.id === productId) || allProducts[0];
+
+        // Redirect wardrobes to correct configurator
+        if (product && product.type === 'configurator' && product.visualType === 'wardrobe') {
+            window.location.replace(`configurator.html?id=${product.id}`);
+            return;
+        }
+
+        // 4. Populate page
+        renderProduct(product, allProducts);
+
+        // 5. Load Theme Features
+        loadThemeSettings();
+    });
+
+    function loadThemeSettings() {
+        try {
+            const stored = localStorage.getItem('aura_theme_settings');
+            if (!stored) return;
+            const settings = JSON.parse(stored);
+            const activeTheme = settings.themes.find(t => t.id === settings.activeThemeId);
+            if (!activeTheme) return;
+
+            // Features Apply
+            StoreLogic.applyThemeToProductFeatures('detail-features');
+        } catch (e) { console.error("Theme Loading Error", e); }
+    }
+
+    function renderProduct(product, allProducts) {
+        // Title + meta
+        document.title = product.name + ' | AURA Modern Lüks Mobilya';
+        document.querySelector('meta[name="description"]')
+            .setAttribute('content', product.name + ' - ' + product.category + ' kategorisinde modern mobilya.');
+
+        // Breadcrumb
+        document.getElementById('breadcrumb-name').textContent = product.name;
+        const catLink = document.getElementById('breadcrumb-category');
+        catLink.textContent = product.category;
+        catLink.href = 'products.html?category=' + encodeURIComponent(product.category);
+
+        // Core info
+        document.getElementById('detail-category').textContent = product.category;
+        document.getElementById('detail-name').textContent     = product.name;
+        document.getElementById('detail-price').textContent    = '₺' + product.price.toFixed(2);
+        
+        const descEl = document.getElementById('detail-desc');
+        if (descEl) descEl.textContent = product.description || product.desc || 'Açıklama bulunmuyor.';
+        let stockLabel = '';
+        if (product.stock <= 0) {
+            stockLabel = `<span class="inline-block mt-2 px-3 py-1 bg-red-50 text-red-700 text-xs font-semibold tracking-wider uppercase rounded-full border border-red-200">Stokta Yok</span>`;
+        } else if (product.stock < 5) {
+            stockLabel = `<span class="inline-block mt-2 text-yellow-600 text-sm font-medium">Acele edin, son ${product.stock} ürün!</span>`;
+        }
+        document.getElementById('detail-price').insertAdjacentHTML('afterend', `<div>${stockLabel}</div>`);
+        
+        // document.getElementById('detail-desc').textContent     = DESCRIPTIONS[product.id] || product.name + ' – premium kalitede bir ürün.';
+
+        // Dimensions
+        const dimList = DIMENSIONS[product.id] || ['Detaylar için iletişime geçiniz.'];
+        document.getElementById('detail-dims').innerHTML = dimList.map(d => '<li>' + d + '</li>').join('');
+
+        // Action Area (Stock Logic)
+        const actionArea = document.getElementById('detail-action-area');
+        if (product.stock <= 0) {
+            actionArea.innerHTML = `
+                <button class="w-full bg-gray-200 text-gray-500 font-medium tracking-widest uppercase text-sm py-4 cursor-not-allowed border border-gray-300" disabled>Tükendi</button>
+            `;
+        } else {
+            actionArea.innerHTML = `
+                <div class="flex border border-gray-300 w-32">
+                    <button onclick="changeQty(-1)" class="px-4 py-3 text-gray-500 hover:text-gray-900 transition-colors focus:outline-none">-</button>
+                    <input type="number" id="qty-input" value="1" min="1" max="${product.stock}" class="w-full text-center font-medium text-gray-900 border-none focus:ring-0" readonly>
+                    <button onclick="changeQty(1, ${product.stock})" class="px-4 py-3 text-gray-500 hover:text-gray-900 transition-colors focus:outline-none">+</button>
+                </div>
+                <button class="flex-1 bg-gray-900 text-white font-medium tracking-widest uppercase text-sm hover:bg-gray-800 transition-colors py-4" onclick="alert('Sepete Eklendi!')">Sepete Ekle</button>
+            `;
+        }
+
+        // Gallery Dynamic logic
+        const gallery = (product.images && product.images.length > 0) 
+            ? product.images 
+            : ['https://via.placeholder.com/800x1000'];
+
+        setMainImage(gallery[0]);
+
+        const thumbsCol = document.getElementById('thumbs-col');
+        thumbsCol.innerHTML = '';
+        gallery.forEach((src, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'border-2 outline-none transition-colors ' + (i === 0 ? 'border-gray-900' : 'border-transparent hover:border-gray-300');
+            btn.innerHTML = '<img src="' + src.replace('w=1200','w=200') + '" alt="Görsel ' + (i+1) + '" class="w-full h-auto object-cover aspect-square">';
+            btn.addEventListener('click', () => {
+                setMainImage(src);
+                // update active thumb
+                thumbsCol.querySelectorAll('button').forEach(b => {
+                    b.className = 'border-2 outline-none transition-colors border-transparent hover:border-gray-300';
+                });
+                btn.className = 'border-2 outline-none transition-colors border-gray-900';
+            });
+            thumbsCol.appendChild(btn);
+        });
+
+        // Related products (all others, up to 4)
+        const related = allProducts.filter(p => p.id !== product.id).slice(0, 4);
+        document.getElementById('related-grid').innerHTML = related.map(p => `
+            <div class="group">
+                <a href="product-detail.html?id=${p.id}" class="block mb-4 bg-gray-100 aspect-[4/5] relative overflow-hidden">
+                    <img src="${p.images[0] || 'https://via.placeholder.com/600x800'}" alt="${p.name}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                </a>
+                <h3 class="text-lg font-medium text-gray-900 mb-1"><a href="product-detail.html?id=${p.id}">${p.name}</a></h3>
+                <p class="text-gray-500 font-light">₺${p.price.toFixed(2)}</p>
+            </div>
+        `).join('');
+    }
+
+    function setMainImage(src) {
+        const img = document.getElementById('main-product-image');
+        img.style.opacity = '0';
+        setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 220);
+    }
+
+    function changeQty(delta, maxStock) {
+        const inp = document.getElementById('qty-input');
+        if(!inp) return;
+        let newVal = (parseInt(inp.value) || 1) + delta;
+        newVal = Math.max(1, Math.min(newVal, maxStock || 99)); // constrain between 1 and maxStock
+        inp.value = newVal;
+    }
+</script>
+
+</body>
+</html>

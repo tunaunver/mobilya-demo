@@ -1,0 +1,187 @@
+[
+  {
+    "id": "aura-premium-gardirop",
+    "name": "Aura Premium Gardırop",
+    "visualType": "wardrobe",
+    "basePrice": 8500,
+    "dimensions": {
+      "width": { "min": 120, "max": 400, "default": 160 },
+      "height": { "min": 180, "max": 280, "default": 220 },
+      "depth": { "min": 50, "max": 75, "default": 60 }
+    },
+    "partitions": { "min": 1, "max": 5 },
+    "pricePerCmWidth": 45,
+    "pricePerCmHeight": 35,
+    "pricePerCmDepth": 25,
+    "rules": [],
+    "colors": [
+      { "id": "aura-white", "name": "Aura Beyaz", "hex": "#F9F9F9", "priceModifier": 0 },
+      { "id": "aura-gold-oak", "name": "Altın Meşe", "hex": "#D4B483", "priceModifier": 1200 },
+      { "id": "aura-anthracite", "name": "Koyu Antrasit", "hex": "#2B2B2B", "priceModifier": 1500 }
+    ],
+    "materials": [
+      { "id": "mdf-lam", "name": "Premium MDF Lam", "priceModifier": 0 },
+      { "id": "massive-wood", "name": "Masif Kaplama", "priceModifier": 4500 }
+    ],
+    "modules": [
+      { "id": "shelf", "name": "Raf", "type": "storage", "priceModifier": 250 },
+      { "id": "drawer", "name": "Çekmece", "type": "storage", "priceModifier": 850 },
+      { "id": "hanger", "name": "Askı Borusu", "type": "extra", "priceModifier": 300 }
+    ],
+    "doorModels": [
+      { "id": "none", "name": "Açık Raf", "priceModifier": 0 },
+      { "id": "wood", "name": "Ahşap Kapak", "priceModifier": 1200 },
+      { "id": "glass", "name": "Şeffaf Cam", "priceModifier": 2500 },
+      { "id": "mirror", "name": "Aynalı Kapak", "priceModifier": 1800 }
+    ],
+    "handles": [
+      { "id": "standard", "name": "Standard Çubuk", "priceModifier": 0 },
+      { "id": "point", "name": "Nokta Kulp", "priceModifier": 150 },
+      { "id": "none", "name": "Kulpsuz (Bas-Aç)", "priceModifier": 450 }
+    ]
+  },
+  {
+    "id": "modular-wardrobe",
+    "name": "Modüler Dolap Sistemi",
+    "basePrice": 3500,
+    "dimensions": {
+      "width": { "min": 80, "max": 240, "default": 120 },
+      "height": { "min": 180, "max": 260, "default": 210 },
+      "depth": { "min": 40, "max": 80, "default": 60 }
+    },
+    "colors": [
+      { "id": "mat-white", "name": "Mat Beyaz", "hex": "#FFFFFF", "priceModifier": 0 },
+      { "id": "oak", "name": "Meşe", "hex": "#C19A6B", "priceModifier": 450 },
+      { "id": "anthracite", "name": "Antrasit", "hex": "#2F2F2F", "priceModifier": 600 }
+    ],
+    "materials": [
+      { "id": "suntalam", "name": "Suntalam", "priceModifier": 0 },
+      { "id": "mdf", "name": "MDF", "priceModifier": 850 }
+    ],
+    "modules": [
+      { "id": "shelf", "name": "Raf", "type": "storage", "priceModifier": 120 },
+      { "id": "drawer", "name": "Çekmece", "type": "storage", "priceModifier": 480 },
+      { "id": "door", "name": "Kapak", "type": "access", "priceModifier": 350 }
+    ],
+    "rules": [
+      { 
+        "id": "minDepthForDrawer", 
+        "target": "drawer", 
+        "property": "depth", 
+        "min": 45, 
+        "errorMessage": "Çekmece eklemek için derinlik en az 45cm olmalıdır." 
+      }
+    ]
+  },
+  {
+    "id": "office-desk",
+    "name": "Yönetici Çalışma Masası",
+    "basePrice": 1800,
+    "dimensions": {
+      "width": { "min": 120, "max": 200, "default": 160 },
+      "height": { "min": 72, "max": 80, "default": 75 },
+      "depth": { "min": 60, "max": 90, "default": 70 }
+    },
+    "colors": [
+      { "id": "walnut", "name": "Ceviz", "hex": "#5D4037", "priceModifier": 300 },
+      { "id": "black", "name": "Siyah", "hex": "#000000", "priceModifier": 0 }
+    ],
+    "materials": [
+      { "id": "standard", "name": "Standart", "priceModifier": 0 },
+      { "id": "premium", "name": "Premium Kaplama", "priceModifier": 1200 }
+    ],
+    "modules": [
+      { "id": "cable-box", "name": "Kablo Kanalı", "type": "extra", "priceModifier": 150 },
+      { "id": "pedestal", "name": "Keson", "type": "storage", "priceModifier": 950 }
+    ],
+    "rules": [
+      { 
+        "id": "minWidthForPedestal", 
+        "target": "pedestal", 
+        "property": "width", 
+        "min": 140, 
+        "errorMessage": "Keson eklemek için masa genişliği en az 140cm olmalıdır." 
+      }
+    ]
+  },
+  {
+    "id": "tv-unit",
+    "name": "Modern TV Ünitesi",
+    "basePrice": 2200,
+    "dimensions": {
+      "width": { "min": 140, "max": 240, "default": 180 },
+      "height": { "min": 40, "max": 75, "default": 50 },
+      "depth": { "min": 35, "max": 55, "default": 45 }
+    },
+    "colors": [
+      { "id": "white", "name": "Parlak Beyaz", "hex": "#FFFFFF", "priceModifier": 0 },
+      { "id": "walnut", "name": "Ceviz", "hex": "#5D4037", "priceModifier": 350 },
+      { "id": "stone", "name": "Taş Gri", "hex": "#9E9E9E", "priceModifier": 200 }
+    ],
+    "materials": [
+      { "id": "chipboard", "name": "Suntalam", "priceModifier": 0 },
+      { "id": "mdf", "name": "MDF Lam", "priceModifier": 600 }
+    ],
+    "modules": [
+      { "id": "led-strip", "name": "LED Aydınlatma", "type": "extra", "priceModifier": 450 },
+      { "id": "glass-shelf", "name": "Cam Raf", "type": "storage", "priceModifier": 180 }
+    ],
+    "rules": [
+      { 
+        "id": "minWidthForLed", 
+        "target": "led-strip", 
+        "property": "width", 
+        "min": 180, 
+        "errorMessage": "LED aydınlatma seçeneği için genişlik en az 180cm olmalıdır." 
+      }
+    ]
+  },
+  {
+    "id": "sliding-wardrobe",
+    "name": "Modern Sürgü Kapaklı Gardırop",
+    "visualType": "wardrobe",
+    "basePrice": 12500,
+    "dimensions": {
+      "width": { "min": 180, "max": 360, "default": 240 },
+      "height": { "min": 210, "max": 270, "default": 240 },
+      "depth": { "min": 60, "max": 70, "default": 65 }
+    },
+    "partitions": { "min": 2, "max": 4 },
+    "pricePerCmWidth": 65,
+    "pricePerCmHeight": 50,
+    "pricePerCmDepth": 40,
+    "doorsEnabled": true,
+    "colors": [
+      { "id": "silk-grey", "name": "İpek Gri", "hex": "#D3D3D3", "priceModifier": 0 },
+      { "id": "walnut-premium", "name": "Ceviz Premium", "hex": "#4E342E", "priceModifier": 2200 },
+      { "id": "black-matte", "name": "Mat Siyah", "hex": "#1A1A1A", "priceModifier": 1800 }
+    ],
+    "materials": [
+      { "id": "mdf-plus", "name": "MDF Plus", "priceModifier": 0 },
+      { "id": "solid-oak", "name": "Masif Meşe", "priceModifier": 7500 }
+    ],
+    "modules": [
+      { "id": "internal-drawer", "name": "İç Çekmece Seti (3'lü)", "type": "storage", "priceModifier": 1850 },
+      { "id": "pants-rack", "name": "Pantolonluk", "type": "extra", "priceModifier": 950 },
+      { "id": "tie-rack", "name": "Kravatlık", "type": "extra", "priceModifier": 450 },
+      { "id": "sensor-light", "name": "Sensörlü İç Aydınlatma", "type": "extra", "priceModifier": 1200 }
+    ],
+    "doorModels": [
+      { "id": "panel", "name": "Düz Panel", "priceModifier": 1200 },
+      { "id": "mirror-full", "name": "Tam Boy Aynalı", "priceModifier": 3200 }
+    ],
+    "handles": [
+      { "id": "profile-integrated", "name": "Entegre Boy Profil", "priceModifier": 0 },
+      { "id": "minimal-black", "name": "Minimal Siyah Kulp", "priceModifier": 350 }
+    ],
+    "rules": [
+      { 
+        "id": "minWidthFor3Partitions", 
+        "target": "partitions", 
+        "property": "width", 
+        "min": 240, 
+        "errorMessage": "3 bölme için genişlik en az 240cm olmalıdır." 
+      }
+    ]
+  }
+]

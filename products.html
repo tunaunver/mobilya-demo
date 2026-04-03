@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünler | AURA Modern Lüks Mobilya</title>
+    <meta name="description" content="Modern, minimalist lüks mobilya koleksiyonumuzun tamamını keşfedin.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- SEO Manager -->
+    <script src="js/seo-manager.js"></script>
+    <!-- Auth & Logic -->
+    <script src="js/auth-manager.js"></script>
+    <script src="js/nav-auth.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        accent: {
+                            100: '#f4f1ed',
+                            200: '#e3dccf',
+                            500: '#c5b79f',
+                            900: '#3e3831',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hover-scale {
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .group:hover .hover-scale {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Navigation (Same as Home) -->
+    <nav class="sticky top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center md:hidden">
+                    <button type="button" class="text-gray-900 hover:text-gray-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-shrink-0 flex items-center justify-center flex-1 md:flex-none md:justify-start">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-gray-900">AURA</a>
+                </div>
+                <div class="hidden md:ml-10 md:flex md:space-x-8">
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Ana Sayfa</a>
+                    <a href="products.html" class="text-gray-900 border-b-2 border-gray-900 px-1 pt-1 text-sm font-medium transition-colors">Ürünler</a>
+                    <a href="about.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">Hakkımızda</a>
+                    <a href="contact.html" class="text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 px-1 pt-1 text-sm font-medium transition-colors">İletişim</a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <button class="text-gray-900 hover:text-gray-600 transition-colors relative">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-gray-900 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <a href="#" class="hidden sm:inline-block text-gray-900 hover:text-gray-600 transition-colors" title="Üye Girişi">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-accent-100 py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-serif text-gray-900 mb-4">Koleksiyonumuz</h1>
+            <p class="text-gray-600 font-light max-w-2xl mx-auto">Yaşam alanlarınızı yüceltmek için tasarlanmış zamansız, minimalist mobilya seçkimizi keşfedin.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 flex flex-col md:flex-row gap-12">
+        
+        <!-- Sidebar Filters -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="sticky top-28">
+                <!-- Category Filter -->
+                <div class="mb-8">
+                    <h3 class="text-sm font-semibold tracking-widest uppercase text-gray-900 mb-4 pb-2 border-b border-gray-200">Kategoriler</h3>
+                    <ul class="space-y-3" id="category-list">
+                        <li>
+                            <a href="products.html" data-category="" class="category-link text-gray-500 hover:text-gray-900 transition-colors text-sm flex justify-between items-center group">
+                                Tüm Ürünler <span class="text-gray-400 text-xs" id="count-all"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html?category=Oturma+Grupları" data-category="Oturma Grupları" class="category-link text-gray-500 hover:text-gray-900 transition-colors text-sm flex justify-between items-center group">
+                                Oturma Grupları <span class="text-gray-400 text-xs" id="count-oturma"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html?category=Masalar" data-category="Masalar" class="category-link text-gray-500 hover:text-gray-900 transition-colors text-sm flex justify-between items-center group">
+                                Masalar <span class="text-gray-400 text-xs" id="count-masalar"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html?category=Aydınlatma" data-category="Aydınlatma" class="category-link text-gray-500 hover:text-gray-900 transition-colors text-sm flex justify-between items-center group">
+                                Aydınlatma <span class="text-gray-400 text-xs" id="count-aydinlatma"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html?category=Aksesuarlar" data-category="Aksesuarlar" class="category-link text-gray-500 hover:text-gray-900 transition-colors text-sm flex justify-between items-center group">
+                                Aksesuarlar <span class="text-gray-400 text-xs" id="count-aksesuarlar"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="mb-8">
+                    <h3 class="text-sm font-semibold tracking-widest uppercase text-gray-900 mb-4 pb-2 border-b border-gray-200">Fiyat</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-900 rounded-sm border-gray-300 focus:ring-gray-900 cursor-pointer">
+                            <span class="text-gray-600 text-sm">$500 Altı</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-900 rounded-sm border-gray-300 focus:ring-gray-900 cursor-pointer">
+                            <span class="text-gray-600 text-sm">$500 - $1,000</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-gray-900 rounded-sm border-gray-300 focus:ring-gray-900 cursor-pointer">
+                            <span class="text-gray-600 text-sm">$1,000 Üzeri</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Product Grid -->
+        <main class="flex-1">
+            <!-- Toolbar -->
+            <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200">
+                <span id="result-count" class="text-sm text-gray-500 font-light">Ürünler yükleniyor...</span>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500 font-light">Sırala:</span>
+                    <select id="sort-select" class="bg-transparent text-sm text-gray-900 font-medium focus:outline-none focus:ring-0 border-none cursor-pointer">
+                        <option value="featured">Öne Çıkanlar</option>
+                        <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+                        <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+                        <option value="newest">En Yeniler</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div id="products-page-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                <!-- Products will be loaded dynamically via JavaScript -->
+                <div class="col-span-full py-20 text-center text-gray-500">
+                    <div class="inline-block animate-spin w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full mb-4"></div>
+                    <p>Ürünler yükleniyor...</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-16 flex justify-center">
+                <nav class="flex items-center space-x-2">
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-gray-300 text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-900 text-white font-medium text-sm">1</a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-gray-300 text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors font-medium text-sm">2</a>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-gray-300 text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors font-medium text-sm">3</a>
+                    <span class="px-2 text-gray-500">...</span>
+                    <a href="#" class="w-10 h-10 flex items-center justify-center border border-gray-300 text-gray-500 hover:border-gray-900 hover:text-gray-900 transition-colors text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </nav>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer (Same as Home) -->
+    <footer class="bg-gray-900 text-white mt-auto py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Brand Info -->
+                <div class="lg:col-span-1">
+                    <a href="index.html" class="font-serif text-2xl font-semibold tracking-widest text-white block mb-6">AURA</a>
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
+                        Modern evler için olağanüstü, minimalist parçaların kürasyonu. Konforu tasarlıyor, yaşamı yüceltiyoruz.
+                    </p>
+                </div>
+                <!-- Shop Links -->
+                <div>
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Alışveriş</h4>
+                    <ul class="space-y-4">
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Tüm Ürünler</a></li>
+                        <li><a href="products.html?category=seating" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Oturma Grupları</a></li>
+                        <li><a href="products.html?category=tables" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Masalar</a></li>
+                    </ul>
+                </div>
+                <!-- Support Links -->
+                <div>
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Destek</h4>
+                    <ul class="space-y-4">
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors text-sm font-light">Bize Ulaşın</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm font-light">SSS</a></li>
+                    </ul>
+                </div>
+                <!-- Newsletter -->
+                <div class="lg:col-span-1">
+                    <h4 class="text-sm font-semibold tracking-widest uppercase mb-6">Bülten</h4>
+                    <p class="text-gray-400 text-sm font-light mb-4">Güncellemelerden haberdar olmak için abone olun.</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="E-posta adresinizi girin" class="bg-gray-800 border-none text-white px-4 py-3 text-sm focus:ring-1 focus:ring-white outline-none w-full" required>
+                        <button type="submit" class="bg-white text-gray-900 border border-white hover:bg-transparent hover:text-white px-4 py-3 text-sm font-medium tracking-widest uppercase transition-colors w-full">Abone Ol</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-light">
+                <p>&copy; 2026 AURA Mobilya. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Dynamic Product Loading Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const grid        = document.getElementById('products-page-grid');
+        const sortSelect  = document.getElementById('sort-select');
+        const resultCount = document.getElementById('result-count');
+        if (!grid) return;
+
+        const params         = new URLSearchParams(window.location.search);
+        const activeCategory = params.get('category') || '';
+
+        const fallbackProducts = [
+          { id: "1", name: "Nosh Sandalye",       category: "Oturma Grupları", price: 450.00,  stock: 12, images: ["https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=600"], isNew: true  },
+          { id: "2", name: "Meşe Yemek Masası",   category: "Masalar",         price: 1200.00, stock: 5, images: ["https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=600"], isNew: false },
+          { id: "3", name: "Bulut Koltuk",         category: "Oturma Grupları", price: 2450.00, stock: 0, images: ["https://images.unsplash.com/photo-1507133750070-4ed3b22e17e6?auto=format&fit=crop&q=80&w=600"], isNew: false },
+          { id: "4", name: "Pirinç Zemin Lambası", category: "Aydınlatma",      price: 320.00,  stock: 15, images: ["https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600"], isNew: false },
+          { id: "5", name: "Ceviz Konsol",         category: "Masalar",         price: 1850.00, stock: 2, images: ["https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=600"], isNew: false },
+          { id: "6", name: "Bar Taburesi",         category: "Oturma Grupları", price: 280.00,  stock: 20, images: ["https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=600"], isNew: false }
+        ];
+
+        let allProducts = [];
+        const STORE_KEY = 'aura_products';
+
+        // Try to get from localStorage first (synced with Admin)
+        const stored = localStorage.getItem(STORE_KEY);
+        if (stored) {
+            allProducts = JSON.parse(stored).map(p => {
+                if (p.image && !p.images) { p.images = [p.image]; delete p.image; }
+                if (!p.images) p.images = [];
+                if (p.stock === undefined) p.stock = 10;
+                return p;
+            });
+        } else {
+            // Fallback to products.json
+            try {
+                const response = await fetch('data/products.json');
+                if (response.ok) {
+                    allProducts = await response.json();
+                } else {
+                    allProducts = fallbackProducts;
+                }
+            } catch (error) {
+                console.warn('Fetch failed, using hardcoded fallback.');
+                allProducts = fallbackProducts;
+            }
+        }
+        // ── Category counts ──────────────────────────────────────────────
+        const countEl = {
+            all:          document.getElementById('count-all'),
+            oturma:       document.getElementById('count-oturma'),
+            masalar:      document.getElementById('count-masalar'),
+            aydinlatma:   document.getElementById('count-aydinlatma'),
+            aksesuarlar:  document.getElementById('count-aksesuarlar')
+        };
+        if (countEl.all)         countEl.all.textContent         = allProducts.length;
+        if (countEl.oturma)      countEl.oturma.textContent      = allProducts.filter(p => p.category === 'Oturma Grupları').length;
+        if (countEl.masalar)     countEl.masalar.textContent     = allProducts.filter(p => p.category === 'Masalar').length;
+        if (countEl.aydinlatma)  countEl.aydinlatma.textContent  = allProducts.filter(p => p.category === 'Aydınlatma').length;
+        if (countEl.aksesuarlar) countEl.aksesuarlar.textContent = allProducts.filter(p => p.category === 'Aksesuarlar').length;
+
+        // ── Active category highlight ─────────────────────────────────────
+        document.querySelectorAll('.category-link').forEach(link => {
+            if (link.getAttribute('data-category') === activeCategory) {
+                link.classList.remove('text-gray-500');
+                link.classList.add('text-gray-900', 'font-medium');
+            }
+        });
+
+        // ── Filter & keep reference ───────────────────────────────────────
+        let currentProducts = activeCategory
+            ? allProducts.filter(p => p.category === activeCategory)
+            : allProducts;
+
+        renderProducts(currentProducts);
+
+        // ── Sort handler ──────────────────────────────────────────────────
+        sortSelect.addEventListener('change', () => {
+            const val  = sortSelect.value;
+            const copy = [...currentProducts];
+
+            if (val === 'price-asc')  copy.sort((a, b) => a.price - b.price);
+            if (val === 'price-desc') copy.sort((a, b) => b.price - a.price);
+            if (val === 'newest')     copy.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+            // 'featured' → original order (currentProducts)
+            if (val === 'featured')   copy.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+
+            renderProducts(copy);
+        });
+
+        // ── Render function ───────────────────────────────────────────────
+        function renderProducts(products) {
+            grid.innerHTML = '';
+
+            // Update result count text
+            if (resultCount) {
+                resultCount.textContent = products.length + ' ürün gösteriliyor';
+            }
+
+            if (products.length === 0) {
+                grid.innerHTML = '<div class="col-span-full py-20 text-center text-gray-500"><p>Bu kategoride ürün bulunamadı.</p></div>';
+                return;
+            }
+
+            products.forEach((product) => {
+                let badgeHtml = '';
+                if (product.stock <= 0) {
+                    badgeHtml = `<div class="absolute top-4 left-4 bg-red-600 px-2 py-1 text-xs font-semibold tracking-wider uppercase text-white">Tükendi</div>`;
+                } else if (product.isNew) {
+                    badgeHtml = `<div class="absolute top-4 left-4 bg-white px-2 py-1 text-xs font-semibold tracking-wider uppercase text-gray-900">Yeni</div>`;
+                }
+
+                const outOfStockOverlay = product.stock <= 0 ? `<div class="absolute inset-0 bg-white/40 backdrop-grayscale-[.5]"></div>` : '';
+                
+                const hoverAction = product.stock <= 0 
+                    ? `<button class="w-full bg-red-50 text-red-700 py-3 text-sm font-medium cursor-not-allowed" disabled>Stokta Yok</button>`
+                    : `<button class="w-full bg-white/90 backdrop-blur text-gray-900 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors" onclick="event.preventDefault(); alert('Ürün sepete eklendi!');">Hızlı Ekle</button>`;
+
+                const detailUrl = product.type === 'configurator' ? `configurator.html?id=${product.id}` : `product-detail.html?id=${product.id}`;
+
+                grid.insertAdjacentHTML('beforeend', `
+                    <div class="group">
+                        <a href="${detailUrl}" class="block mb-4 overflow-hidden bg-gray-100 aspect-[4/5] relative ${product.stock <= 0 ? 'opacity-80' : ''}">
+                            <img src="${product.images[0] || 'https://via.placeholder.com/600x800'}" alt="${product.name}" class="w-full h-full object-cover object-center ${product.stock > 0 ? 'hover-scale' : ''}">
+                            ${outOfStockOverlay}
+                            ${badgeHtml}
+                            <div class="absolute bottom-4 left-0 right-0 px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                                ${hoverAction}
+                            </div>
+                        </a>
+                        <h3 class="text-lg font-medium text-gray-900 mb-1">
+                            <a href="${detailUrl}">${product.name}</a>
+                        </h3>
+                        <p class="text-gray-500 font-light">₺${product.price.toFixed(2)}</p>
+                    </div>
+                `);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

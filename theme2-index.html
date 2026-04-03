@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Demo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        aura: {
+                            gold: '#C5A880',
+                            dark: '#1A1A1A',
+                            light: '#F9F9F9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Auth & Logic -->
+    <script src="js/auth-manager.js"></script>
+    <script src="js/nav-auth.js"></script>
+    
+    <script src="js/shop-core.js"></script>
+    <script src="js/store-logic.js"></script>
+    <script src="js/cart-ui.js"></script>
+    <script src="js/seo-manager.js"></script>
+    
+    <style>
+        body {
+            background-color: #FAFAFA;
+            color: #1A1A1A;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image Zoom on hover */
+        .img-zoom-container {
+            overflow: hidden;
+        }
+        .img-zoom-container img {
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-zoom-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar for Horizontal Scroll */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Hero Slider Transitions */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        .hero-container:hover .hero-nav-btn {
+            opacity: 1;
+        }
+        .hero-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            scale: 1.1;
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm shadow-sm py-4 px-6 md:px-12" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-900 hover:opacity-75 transition-opacity" id="mobile-menu-btn">
+                <i class="ph ph-list text-3xl"></i>
+            </button>
+            
+            <!-- Logo -->
+            <a href="theme2-index.html" class="text-2xl md:text-3xl font-serif text-gray-900 tracking-widest uppercase relative z-10" id="nav-logo">
+                AURA
+            </a>
+
+            <!-- Desktop Links (Hidden on Mobile) -->
+            <div class="hidden md:flex space-x-12 items-center">
+                <a href="theme2-index.html" class="text-gray-900 border-b border-gray-900 pb-1 text-sm tracking-widest uppercase">Ana Sayfa</a>
+                <a href="theme2-products.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">Koleksiyon</a>
+                <a href="theme2-contact.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">İletişim</a>
+                
+                <button id="cart-toggle-btn" class="relative group p-2">
+                    <i class="ph ph-shopping-bag text-xl text-gray-900 transition-transform group-hover:scale-110"></i>
+                    <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                </button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <div class="flex items-center space-x-4 md:hidden">
+                <button class="cart-toggle-btn relative p-2">
+                    <i class="ph ph-shopping-bag text-2xl text-gray-900"></i>
+                    <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="text-gray-900">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU (Full screen) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-500">
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-gray-900">
+            <i class="ph ph-x text-3xl"></i>
+        </button>
+        <div class="flex flex-col space-y-8 text-center">
+            <a href="theme2-index.html" class="text-3xl font-serif text-gray-900 tracking-wider underline underline-offset-8 font-bold">Ana Sayfa</a>
+            <a href="theme2-products.html" class="text-3xl font-serif text-gray-900 tracking-wider">Koleksiyon</a>
+            <a href="theme2-contact.html" class="text-3xl font-serif text-gray-900 tracking-wider">İletişim</a>
+        </div>
+    </div>
+    <!-- HERO SECTION -->
+    <section class="pt-24 md:pt-32 bg-white">
+        <div class="w-full">
+            <div class="hero-container relative h-[70vh] min-h-[500px] md:h-[80vh] w-full flex items-center justify-center overflow-hidden">
+                
+                <!-- Slider Wrapper -->
+                <div id="t2-hero-slider" class="absolute inset-0 z-0">
+                    <!-- Images will be injected here -->
+                    <div class="hero-slide active">
+                        <img src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30"></div>
+                    </div>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button onclick="prevHero()" class="hero-nav-btn absolute left-8 z-20 hidden md:flex items-center justify-center">
+                    <i class="ph ph-caret-left text-2xl"></i>
+                </button>
+                <button onclick="nextHero()" class="hero-nav-btn absolute right-8 z-20 hidden md:flex items-center justify-center">
+                    <i class="ph ph-caret-right text-2xl"></i>
+                </button>
+
+                <!-- Content -->
+                <div id="t2-hero-content-slider" class="relative z-10 w-full">
+                    <!-- Slide content will be injected here if needed, but it's better to have it inside each slide for simultaneous transition -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SHOWCASE (Grid) -->
+    <section class="py-24 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-16 reveal">
+                <h2 id="t2-newseason-title" class="text-3xl md:text-5xl font-serif">Yeni Sezon</h2>
+            </div>
+
+            <div id="t2-new-showcase" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                <!-- Dynamically Populated Products -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORY SECTION -->
+    <section class="py-24 bg-[#F5F5F5] border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-16 reveal">
+                <h2 id="t2-cat-section-title" class="text-3xl md:text-5xl font-serif">Özel Kategoriler</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <!-- Category 1-8 Loop through similar structure -->
+                <a id="t2-cat-link-0" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-0" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 0">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-0" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Oturma</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-1" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-1" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 1">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-1" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Masalar</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-2" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-2" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 2">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-2" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Aydınlatma</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-3" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-3" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 3">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-3" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Yatak Odası</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-4" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-4" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 4">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-4" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Depolama</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-5" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-5" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 5">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-5" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Aksesuarlar</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-6" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-6" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 6">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-6" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Dış Mekan</h3>
+                    </div>
+                </a>
+                <a id="t2-cat-link-7" href="#" class="group block relative aspect-square overflow-hidden bg-gray-100 rounded-3xl transition-transform duration-500 hover:-translate-y-2">
+                    <img id="t2-cat-img-7" src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Category 7">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <h3 id="t2-cat-title-7" class="text-white text-lg md:text-xl font-serif tracking-widest uppercase">Ofis</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SIGNATURE COLLECTION (Grid) -->
+    <section class="py-24 md:py-32 bg-[#FAFAFA]">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-16 reveal">
+                <h2 id="t2-signature-title" class="text-3xl md:text-5xl font-serif">İmza Koleksiyon</h2>
+            </div>
+
+            <div id="t2-featured-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+                <!-- Dynamically Populated Products -->
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            <div>
+                <h3 class="font-serif text-3xl mb-6">AURA</h3>
+                <p id="f-desc" class="text-gray-400 text-sm leading-relaxed max-w-sm">Premium mobilyalarla yaşam alanlarınıza değer katıyoruz. Tasarımın saflığı ve kalitenin buluşma noktası.</p>
+            </div>
+            <div>
+                <h4 class="uppercase tracking-widest text-xs font-medium mb-6 text-gray-500">Hızlı Linkler</h4>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li><a href="theme2-products.html" class="hover:text-white transition-colors">Koleksiyon</a></li>
+                    <li><a href="theme2-contact.html" class="hover:text-white transition-colors">İletişim</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="uppercase tracking-widest text-xs font-medium mb-6 text-gray-500">İletişim</h4>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li id="f-address">Nişantaşı, İstanbul</li>
+                    <li id="f-email">info@auramobilya.com</li>
+                    <li id="f-phone">+90 555 123 45 67</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 border-t border-white/10 pt-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+            <p>&copy; 2026 AURA Mobilya. Tüm hakları saklıdır.</p>
+            <div class="space-x-4 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white">Instagram</a>
+                <a href="#" class="hover:text-white">Pinterest</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- STICKY WHATSAPP CTA -->
+    <a id="f-whatsapp-btn" href="https://wa.me/905551234567?text=Merhaba,%20AURA%20koleksiyonunuz%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group">
+        <i class="ph ph-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- SCRIPTS -->
+    <script>
+        // 1. Reveal Animation Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        document.addEventListener("DOMContentLoaded", reveal);
+
+        // 2. Navbar Scroll Effect
+        window.addEventListener("scroll", function() {
+            const nav = document.getElementById("navbar");
+            if (window.scrollY > 50) {
+                nav.classList.add("shadow-md");
+                nav.classList.remove("shadow-sm");
+            } else {
+                nav.classList.remove("shadow-md");
+                nav.classList.add("shadow-sm");
+            }
+        });
+
+        // 3. Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        });
+        document.getElementById('close-menu-btn').addEventListener('click', () => {
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        });
+
+        // 5. Load Data from Admin (localStorage)
+        document.addEventListener('DOMContentLoaded', async () => {
+            await ShopCore.loadCache();
+            loadThemeSettings();
+            loadNewShowcase();
+            loadFeaturedProducts();
+            // Trigger reveal after loading products
+            setTimeout(reveal, 100);
+        });
+
+        function loadThemeSettings() {
+            try {
+                const THEME_STORE_KEY = 'aura_theme_settings';
+                const stored = localStorage.getItem(THEME_STORE_KEY);
+                if (!stored) return;
+
+                const settings = JSON.parse(stored);
+                let activeTheme = null;
+
+                // Robust check for multi-theme structure vs legacy flat structure
+                if (settings.themes && settings.activeThemeId) {
+                    activeTheme = settings.themes.find(t => t.id === settings.activeThemeId) || settings.themes[0];
+                } else if (settings.hero || settings.story) {
+                    activeTheme = settings;
+                }
+
+                if (!activeTheme) return;
+
+                // Helper for multi-line text
+                const setMultiline = (el, text) => {
+                    if (!el || !text) return;
+                    el.innerHTML = text.replace(/\n|\\n/g, '<br>');
+                };
+
+                // Hero Apply
+                // Hero Apply
+                if (activeTheme.hero) {
+                    const h = activeTheme.hero;
+                    const slider = document.getElementById('t2-hero-slider');
+
+                    if (slider && h.slides && h.slides.length > 0) {
+                        slider.innerHTML = h.slides.map((slide, idx) => `
+                            <div class="hero-slide ${idx === 0 ? 'active' : ''}">
+                                <img src="${slide.img}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/30"></div>
+                                
+                                <div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                                    <div class="text-center px-4 max-w-4xl mx-auto flex flex-col items-center reveal active pointer-events-auto">
+                                        <p class="text-white/80 uppercase tracking-[0.3em] text-xs md:text-sm mb-6 font-medium">${slide.subtitle || ''}</p>
+                                        <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif text-white leading-tight mb-8">${(slide.title || '').replace(/\n|\\n/g, '<br>')}</h1>
+                                        <p class="text-white/70 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">${slide.desc || ''}</p>
+                                        ${slide.btnText ? `
+                                            <a href="${slide.btnLink || '#'}" class="inline-flex items-center space-x-3 text-white border-b border-white pb-1 hover:pb-2 transition-all hover:text-white/80">
+                                                <span class="uppercase tracking-widest text-sm font-medium">${slide.btnText}</span>
+                                                <i class="ph ph-arrow-right"></i>
+                                            </a>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                        startHeroSlider(h.slides.length);
+                    }
+                }
+
+                // Section Titles Apply
+                const catTEl = document.getElementById('t2-cat-section-title');
+                setMultiline(catTEl, activeTheme.catSectionTitle);
+
+                // T2 Product Showcase Titles
+                const nsTitle = document.getElementById('t2-newseason-title');
+                const sigTitle = document.getElementById('t2-signature-title');
+                if (nsTitle && activeTheme.t2NewSeasonTitle) nsTitle.innerText = activeTheme.t2NewSeasonTitle;
+                if (sigTitle && activeTheme.t2SignatureTitle) sigTitle.innerText = activeTheme.t2SignatureTitle;
+
+                // Categories Apply
+                if (activeTheme.categories && activeTheme.categories.length > 0) {
+                    activeTheme.categories.forEach((cat, i) => {
+                        const imgEl = document.getElementById(`t2-cat-img-${i}`);
+                        const titleEl = document.getElementById(`t2-cat-title-${i}`);
+                        const linkEl = document.getElementById(`t2-cat-link-${i}`);
+                        
+                        if (linkEl) {
+                            if (cat.active === false) {
+                                linkEl.classList.add('hidden');
+                            } else {
+                                linkEl.classList.remove('hidden');
+                                if (imgEl && cat.imgBase64) imgEl.src = cat.imgBase64;
+                                if (titleEl && cat.title) titleEl.innerText = cat.title;
+                                if (linkEl && cat.link) linkEl.href = cat.link;
+                            }
+                        }
+                    });
+                }
+
+                // Footer Apply
+                if (activeTheme.footer) {
+                    const f = activeTheme.footer;
+                    const adEl = document.getElementById('f-address');
+                    const emEl = document.getElementById('f-email');
+                    const phEl = document.getElementById('f-phone');
+                    const waBtn = document.getElementById('f-whatsapp-btn');
+
+                    if (adEl && f.address) adEl.innerText = f.address;
+                    if (emEl && f.email) emEl.innerText = f.email;
+                    if (phEl && f.phone) phEl.innerText = f.phone;
+                    if (waBtn && f.whatsapp) {
+                        waBtn.href = `https://wa.me/${f.whatsapp.replace(/\D/g, '')}?text=Merhaba,%20AURA%20koleksiyonunuz%20hakkında%20bilgi%20almak%20istiyorum.`;
+                    }
+                    if (f.footerDesc && document.getElementById('f-desc')) {
+                        document.getElementById('f-desc').innerText = f.footerDesc;
+                    }
+                }
+            } catch (e) { console.error("Theme Loading Error", e); }
+        }
+
+        function loadNewShowcase() {
+            try {
+                const products = ShopCore.getProducts();
+                if (!products || !products.length) return;
+                
+                // Get theme settings for selection
+                const activeTheme = StoreLogic.getActiveTheme();
+                let showcase = [];
+                if (activeTheme && activeTheme.t2NewSeasonProducts && activeTheme.t2NewSeasonProducts.length > 0) {
+                    showcase = activeTheme.t2NewSeasonProducts.map(id => products.find(p => p.id === id)).filter(p => p);
+                }
+                
+                if (showcase.length === 0) showcase = products.slice(0, 8);
+
+                const container = document.getElementById('t2-new-showcase');
+                let html = '';
+
+                showcase.forEach((p, index) => {
+                    const imgUrl = (p.images && p.images.length > 0) ? p.images[0] : 'https://via.placeholder.com/600';
+                    const delay = index * 50;
+                    const link = StoreLogic.getProductLink(p);
+                    const priceStr = StoreLogic.formatCurrency(p.price);
+                    
+                    html += `
+                        <a href="${link}" class="group reveal block" style="transition-delay: ${delay}ms">
+                            <div class="aspect-square overflow-hidden bg-gray-100 mb-6 img-zoom-container rounded-2xl">
+                                <img src="${imgUrl}" class="w-full h-full object-cover" alt="${p.name}">
+                            </div>
+                            <h3 class="text-base font-serif text-gray-900 group-hover:text-aura-gold transition-colors">${p.name}</h3>
+                            <p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest font-bold opacity-60">${p.category}</p>
+                            <div class="flex justify-between items-center mt-3">
+                                <p class="text-sm font-bold text-gray-900">${priceStr}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch(e) { console.error("Showcase Loading Error", e); }
+        }
+
+        function loadFeaturedProducts() {
+            try {
+                const products = ShopCore.getProducts();
+                if (!products || !products.length) return;
+                
+                // Get theme settings for selection
+                const activeTheme = StoreLogic.getActiveTheme();
+                let featured = [];
+                if (activeTheme && activeTheme.t2SignatureProducts && activeTheme.t2SignatureProducts.length > 0) {
+                    featured = activeTheme.t2SignatureProducts.map(id => products.find(p => p.id === id)).filter(p => p);
+                }
+                
+                if (featured.length === 0) featured = products.slice(0, 12);
+
+                const container = document.getElementById('t2-featured-products');
+                let prodHTML = '';
+
+                featured.forEach((p, index) => {
+                    const imgUrl = (p.images && p.images.length > 0) ? p.images[0] : 'https://via.placeholder.com/600';
+                    const delay = index * 100; // staggered cascade effect
+                    const link = StoreLogic.getProductLink(p);
+                    const priceStr = StoreLogic.formatCurrency(p.price);
+                    
+                    prodHTML += `
+                        <a href="${link}" class="group reveal block" style="transition-delay: ${delay}ms">
+                            <div class="aspect-square overflow-hidden bg-gray-100 mb-6 img-zoom-container rounded-3xl relative">
+                                <img src="${imgUrl}" class="w-full h-full object-cover" alt="${p.name}">
+                            </div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-lg font-serif text-gray-900 group-hover:text-aura-gold transition-colors">${p.name}</h3>
+                                    <p class="text-[10px] text-gray-500 mt-1 uppercase font-bold tracking-widest opacity-60">${p.category}</p>
+                                    <div class="flex items-center space-x-3 mt-3">
+                                        <p class="text-base font-bold text-gray-900">${priceStr}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+                container.innerHTML = prodHTML;
+            } catch(e) { console.error("Product Loading Error", e); }
+        }
+
+        // Hero Slider Logic
+        let heroIndex = 0;
+        let heroInterval = null;
+        let totalHeroSlides = 0;
+
+        function startHeroSlider(count) {
+            totalHeroSlides = count;
+            if (count > 1) {
+                if (heroInterval) clearInterval(heroInterval);
+                heroInterval = setInterval(nextHero, 6000);
+            }
+        }
+
+        function nextHero() {
+            if (totalHeroSlides <= 1) return;
+            heroIndex = (heroIndex + 1) % totalHeroSlides;
+            updateHeroView();
+        }
+
+        function prevHero() {
+            if (totalHeroSlides <= 1) return;
+            heroIndex = (heroIndex - 1 + totalHeroSlides) % totalHeroSlides;
+            updateHeroView();
+        }
+
+        function updateHeroView() {
+            const slides = document.querySelectorAll('.hero-slide');
+            slides.forEach((s, i) => {
+                if (i === heroIndex) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+            // Reset interval so it doesn't flip immediately after manual change
+            if (heroInterval) {
+                clearInterval(heroInterval);
+                heroInterval = setInterval(nextHero, 6000);
+            }
+        }
+    </script>
+</body>
+</html>
