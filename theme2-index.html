@@ -128,7 +128,7 @@
                 <a href="theme2-products.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">Koleksiyon</a>
                 <a href="theme2-contact.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">İletişim</a>
                 
-                <button id="cart-toggle-btn" class="relative group p-2">
+                <button id="cart-toggle-btn" class="cart-toggle-btn relative group p-2" onclick="CartUI.toggle(true)">
                     <i class="ph ph-shopping-bag text-xl text-gray-900 transition-transform group-hover:scale-110"></i>
                     <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
                 </button>
@@ -136,7 +136,7 @@
 
             <!-- Mobile Toggle -->
             <div class="flex items-center space-x-4 md:hidden">
-                <button class="cart-toggle-btn relative p-2">
+                <button class="cart-toggle-btn relative p-2" onclick="CartUI.toggle(true)">
                     <i class="ph ph-shopping-bag text-2xl text-gray-900"></i>
                     <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
                 </button>

@@ -196,7 +196,7 @@
                     </a>
                 </div>
 
-                <button id="cart-toggle-btn" class="relative group p-2">
+                <button id="cart-toggle-btn" class="cart-toggle-btn relative group p-2" onclick="CartUI.toggle(true)">
                     <i class="ph ph-shopping-bag text-xl text-gray-900 transition-transform group-hover:scale-110"></i>
                     <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
                 </button>
@@ -409,17 +409,28 @@
         let advEngine = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            await ShopCore.loadCache();
-            loadThemeSettings();
-            loadCategories();
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            
-            if (productId) {
-                loadProductDetail(productId);
-            } else {
-                window.location.href = 'theme2-products.html';
+            try {
+                // Ensure data is fetched from MySQL before rendering
+                await ShopCore.loadCache();
+                
+                loadThemeSettings();
+                loadCategories();
+                
+                const urlParams = new URLSearchParams(window.location.search);
+                const productId = urlParams.get('id');
+                
+                if (productId) {
+                    loadProductDetail(productId);
+                } else {
+                    window.location.href = 'theme2-products.html';
+                }
+
+                // Final sync of navigation links for the active theme
+                if (window.StoreLogic) {
+                    StoreLogic.syncHomeLinks();
+                }
+            } catch (err) {
+                console.error("Initialization error:", err);
             }
         });
 

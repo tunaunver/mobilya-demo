@@ -76,7 +76,7 @@
                 <a href="theme2-products.html" class="text-gray-500 hover:text-gray-900 text-sm tracking-widest uppercase transition-colors nav-link">Koleksiyon</a>
                 <a href="theme2-contact.html" class="text-gray-900 text-sm tracking-widest uppercase border-b border-gray-900 pb-1 font-bold">İletişim</a>
                 
-                <button id="cart-toggle-btn" class="relative group p-2">
+                <button id="cart-toggle-btn" class="cart-toggle-btn relative group p-2" onclick="CartUI.toggle(true)">
                     <i class="ph ph-shopping-bag text-xl text-gray-900 transition-transform group-hover:scale-110"></i>
                     <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
                 </button>
@@ -288,41 +288,6 @@
             } catch (e) { console.error("Theme Loading Error", e); }
         }
     </script>
-
-    <!-- CART DRAWER -->
-    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white z-[100] shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col">
-        <div class="px-8 py-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/30">
-            <div>
-                <h2 class="text-2xl font-serif text-gray-900">Sepetiniz</h2>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mt-1">Seçtiğiniz Ürünler</p>
-            </div>
-            <button id="cart-close-btn" class="text-gray-400 hover:text-gray-900 transition-colors p-2">
-                <i class="ph ph-x text-2xl"></i>
-            </button>
-        </div>
-        
-        <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-6">
-            <!-- Items injected by JS -->
-        </div>
-
-        <div class="p-8 border-t border-gray-100 bg-gray-50/50">
-            <div class="flex justify-between items-end mb-8">
-                <div>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-1">Toplam Tutar</p>
-                    <p id="cart-total" class="text-3xl font-serif text-gray-900">₺0</p>
-                </div>
-                <p class="text-[10px] text-gray-400 italic">KDV Dahildir</p>
-            </div>
-            <button onclick="CartUI.checkout()" class="w-full py-5 bg-gray-900 text-white rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-gray-900/10 flex items-center justify-center space-x-3 group">
-                <span>Alışverişi Tamamla</span>
-                <i class="ph ph-arrow-right transition-transform group-hover:translate-x-1"></i>
-            </button>
-            <button id="cart-continue-btn" class="w-full mt-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-gray-900 transition-colors">
-                Alışverişe Devam Et
-            </button>
-        </div>
-    </div>
-    <div id="cart-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-500"></div>
 
     <script src="js/shop-core.js"></script>
     <script src="js/store-logic.js"></script>

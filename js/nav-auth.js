@@ -64,6 +64,7 @@ function updateNavbar(user) {
             if (cartBtn) {
                 cartBtn.id = 'cart-toggle-btn';
                 cartBtn.classList.add('cart-toggle-btn');
+                cartBtn.setAttribute('onclick', 'CartUI.toggle(true)');
                 desktopNav.insertBefore(authSection, cartBtn);
             } else {
                 desktopNav.appendChild(authSection);
