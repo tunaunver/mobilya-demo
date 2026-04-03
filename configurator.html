@@ -44,11 +44,27 @@
     <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 py-6 px-12">
         <div class="max-w-[1800px] mx-auto flex justify-between items-center text-sm uppercase tracking-widest font-medium">
-            <a href="index.html" class="text-2xl font-serif tracking-[0.3em]">AURA</a>
-            <div class="flex space-x-12">
-                <a href="index.html" class="hover:text-aura-gold transition-colors">Ana Sayfa</a>
-                <a href="products.html" class="hover:text-aura-gold transition-colors">Koleksiyon</a>
-                <i class="ph ph-shopping-bag text-xl"></i>
+            <a href="index.html" class="text-2xl font-serif tracking-[0.3em] text-aura-dark">AURA</a>
+            
+            <div class="flex items-center space-x-12">
+                <div class="hidden md:flex space-x-12">
+                    <a href="index.html" class="hover:text-aura-gold transition-colors">Ana Sayfa</a>
+                    <a href="products.html" class="hover:text-aura-gold transition-colors">Koleksiyon</a>
+                    <a href="contact.html" class="hover:text-aura-gold transition-colors">İletişim</a>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <div id="nav-auth-section" class="flex items-center space-x-4">
+                        <a href="login.html" class="relative group p-2 flex items-center justify-center transition-transform hover:scale-110" title="Giriş Yap">
+                            <i class="ph ph-user text-xl text-gray-900"></i>
+                        </a>
+                    </div>
+
+                    <button id="cart-toggle-btn" class="relative group p-2 hover:scale-110 transition-transform">
+                        <i class="ph ph-shopping-bag text-xl"></i>
+                        <span class="cart-count absolute -top-1 -right-1 bg-aura-gold text-white text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -176,9 +192,14 @@
         </div>
     </main>
 
+    <script src="js/auth-manager.js"></script>
     <script src="js/shop-core.js"></script>
+    <script src="js/store-logic.js"></script>
+    <script src="js/cart-ui.js"></script>
+    <script src="js/nav-auth.js"></script>
     <script src="js/configurator.js"></script>
     <script src="js/preview.js"></script>
+
     <script>
         let product = null;
         let configurator = null;
@@ -511,7 +532,7 @@
             if (window.CartUI) {
                 CartUI.toggle(true);
             } else {
-                alert("Ürün sepete eklendi!");
+                console.warn("CartUI not loaded");
             }
         }
 

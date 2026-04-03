@@ -69,46 +69,59 @@ window.renderPreview = function(container, summary) {
         
         const data = selectedModules[`partition_${i}`] || { shelfCount: 0, drawerCount: 0, doorModel: 'none' };
         
-        // Modules (Shelves/Drawers/Hanger)
-        const dCount = data.drawerCount || 0;
-        const drawerHeightPct = dCount > 0 ? Math.min(50, dCount * 12) : 0;
-        
-        const isHanger = data.id === 'hanger';
-        const hangerAreaPct = isHanger ? 45 : 0; // ~1 meter space for hangers
-        const shelfAreaHeight = 100 - drawerHeightPct - hangerAreaPct;
+        // Physical Dimensions from product or defaults
+        const hangerH = product.hangerHeight || 100;
+        const shelfH = product.shelfHeight || 30;
+        const drawerH = product.drawerHeight || 20;
+        const hScale = sh / height; // Pixels per CM
 
+        const isHanger = data.id === 'hanger';
+        const dCount = data.drawerCount || 0;
+        const sCount = data.shelfCount || 0;
+
+        // 1. Drawers (at the bottom)
         if (dCount > 0) {
-            const drawers = document.createElement('div');
-            drawers.className = 'absolute bottom-0 w-full flex flex-col-reverse';
-            drawers.style.height = `${drawerHeightPct}%`;
+            const drawersWrap = document.createElement('div');
+            drawersWrap.className = 'absolute bottom-0 w-full flex flex-col-reverse';
+            drawersWrap.style.height = `${dCount * drawerH * hScale}px`;
             for (let d = 0; d < dCount; d++) {
                 const drw = document.createElement('div');
-                drw.className = 'w-full h-8 border-t border-black/20 flex items-center justify-center';
+                drw.className = 'w-full border-t border-black/20 flex items-center justify-center';
+                drw.style.height = `${drawerH * hScale}px`;
                 drw.innerHTML = '<div class="w-6 h-0.5 bg-black/10 rounded-full"></div>';
-                drawers.appendChild(drw);
+                drawersWrap.appendChild(drw);
             }
-            partition.appendChild(drawers);
+            partition.appendChild(drawersWrap);
         }
 
-        const sCount = data.shelfCount || 0;
-        if (sCount > 0 && shelfAreaHeight > 10) {
-            const gap = shelfAreaHeight / (sCount + 1);
-            for (let s = 1; s <= sCount; s++) {
-                const shelf = document.createElement('div');
-                shelf.className = 'absolute w-full border-b border-black/20';
-                // Place shelf after hanger area and distribute evenly
-                const shelfTop = hangerAreaPct + (s * gap);
-                shelf.style.top = `${shelfTop}%`;
-                partition.appendChild(shelf);
-            }
-        }
-
-        // Hanger (Fixed position at the top of its reserved area)
+        // 2. Hanger (at the top)
         if (isHanger) {
+            const hangerArea = document.createElement('div');
+            hangerArea.className = 'absolute top-0 w-full';
+            hangerArea.style.height = `${hangerH * hScale}px`;
+            
             const bar = document.createElement('div');
             bar.className = 'absolute left-[10%] w-[80%] h-1 bg-gray-400 rounded-full shadow-sm';
-            bar.style.top = '10%'; // Top position within the reserved 45% area
-            partition.appendChild(bar);
+            bar.style.top = '20px'; // Visual offset from top
+            hangerArea.appendChild(bar);
+            partition.appendChild(hangerArea);
+        }
+
+        // 3. Shelves (distributed in available middle space)
+        if (sCount > 0) {
+            const offsetTop = isHanger ? (hangerH * hScale) : 0;
+            const offsetBottom = (dCount * drawerH * hScale);
+            const availablePx = sh - offsetTop - offsetBottom;
+            
+            if (availablePx > 10) {
+                const gap = availablePx / (sCount + 1);
+                for (let s = 1; s <= sCount; s++) {
+                    const shelf = document.createElement('div');
+                    shelf.className = 'absolute w-full border-b border-black/20';
+                    shelf.style.top = `${offsetTop + (s * gap)}px`;
+                    partition.appendChild(shelf);
+                }
+            }
         }
 
         // DOORS (INDIVIDUAL PER PARTITION)

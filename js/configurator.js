@@ -99,13 +99,27 @@ window.createConfigurator = function(product) {
             state.selectedModules[category] = { id: null, shelfCount: 0, drawerCount: 0, doorModel: 'none' };
         }
 
-        const countKey = type === 'shelf' ? 'shelfCount' : 'drawerCount';
-        const current = state.selectedModules[category][countKey] || 0;
-        const newVal = Math.max(0, current + delta);
+        const data = state.selectedModules[category];
+        const isHanger = data.id === 'hanger';
         
-        // Max limit based on height
-        const maxLimit = Math.floor(state.height / 25); 
-        state.selectedModules[category][countKey] = Math.min(newVal, maxLimit);
+        // Physical dimensions from product/defaults
+        const hangerH = product.hangerHeight || 100;
+        const shelfH = product.shelfHeight || 30;
+        const drawerH = product.drawerHeight || 20;
+
+        const availableHeight = state.height - (isHanger ? hangerH : 0);
+        
+        if (type === 'shelf') {
+            const current = data.shelfCount || 0;
+            const otherHeight = (data.drawerCount || 0) * drawerH;
+            const maxShelves = Math.floor((availableHeight - otherHeight) / shelfH);
+            data.shelfCount = Math.min(Math.max(0, current + delta), maxShelves);
+        } else {
+            const current = data.drawerCount || 0;
+            const otherHeight = (data.shelfCount || 0) * shelfH;
+            const maxDrawers = Math.floor((availableHeight - otherHeight) / drawerH);
+            data.drawerCount = Math.min(Math.max(0, current + delta), maxDrawers);
+        }
         
         notify();
     };

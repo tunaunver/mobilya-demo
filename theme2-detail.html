@@ -389,46 +389,6 @@
         </div>
     </div>
 
-    <!-- CART SIDEBAR (Superset from user snippet) -->
-    <div id="cart-sidebar-container">
-        <!-- Cart Sidebar Overlay -->
-        <div id="cart-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] opacity-0 pointer-events-none transition-opacity duration-500"></div>
-
-        <!-- Cart Sidebar -->
-        <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white z-[101] translate-x-full transition-transform duration-500 shadow-2xl flex flex-col">
-            <div class="p-6 md:p-8 flex justify-between items-center border-b border-gray-100">
-                <div>
-                    <h2 class="text-2xl font-serif text-gray-900">Alışveriş Sepetim</h2>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold mt-1" id="cart-count-label">0 Ürün</p>
-                </div>
-                <button id="close-cart-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
-                    <i class="ph ph-x text-xl"></i>
-                </button>
-            </div>
-
-            <div id="cart-items-list" class="flex-grow overflow-y-auto p-6 md:p-8 space-y-6 custom-scrollbar">
-                <!-- Cart items dynamically rendered here -->
-                <div class="h-full flex flex-col items-center justify-center text-center space-y-4 py-20">
-                    <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300">
-                        <i class="ph ph-shopping-bag text-3xl"></i>
-                    </div>
-                    <p class="text-sm text-gray-500">Sepetiniz şu an boş.</p>
-                    <a href="theme2-products.html" class="text-[10px] font-bold uppercase tracking-widest text-aura-gold border-b border-aura-gold pb-1">Alışverişe Başla</a>
-                </div>
-            </div>
-
-            <div class="p-6 md:p-8 border-t border-gray-100 bg-gray-50/50">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-sm font-bold text-gray-400 uppercase tracking-widest">Toplam Tutar</span>
-                    <span id="cart-total-price" class="text-3xl font-serif text-gray-900">₺0.00</span>
-                </div>
-                <button onclick="CartUI.proceedToCheckout()" class="w-full bg-gray-900 text-white font-bold uppercase tracking-[0.2em] text-xs py-5 rounded-xl hover:bg-aura-gold transition-all shadow-lg hover:shadow-aura-gold/20">
-                    Siparişi Tamamla (WhatsApp)
-                </button>
-                <p class="text-[10px] text-gray-400 text-center mt-4 uppercase tracking-[0.2em] font-bold">Kaydetmek için sepetinize ekleyebilirsiniz.</p>
-            </div>
-        </div>
-    </div>
 
     <!-- SCRIPTS -->
     <script>
@@ -448,7 +408,8 @@
         let allCategories = [];
         let advEngine = null;
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            await ShopCore.loadCache();
             loadThemeSettings();
             loadCategories();
             

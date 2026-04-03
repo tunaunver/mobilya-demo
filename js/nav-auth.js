@@ -62,6 +62,8 @@ function updateNavbar(user) {
                           desktopNav.querySelector('a[href*="cart"]');
             
             if (cartBtn) {
+                cartBtn.id = 'cart-toggle-btn';
+                cartBtn.classList.add('cart-toggle-btn');
                 desktopNav.insertBefore(authSection, cartBtn);
             } else {
                 desktopNav.appendChild(authSection);

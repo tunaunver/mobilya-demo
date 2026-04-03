@@ -1739,6 +1739,27 @@
                             </div>
                         </div>
 
+                        <!-- NEW: Edit Layout Rules (Physical Dimensions) -->
+                        <div class="bg-white/50 p-6 rounded-2xl border border-gray-200">
+                            <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                                <i class="ph ph-ruler text-lg text-aura-gold"></i> YERLEŞİM KURALLARI (CM)
+                            </h5>
+                            <div class="grid grid-cols-3 gap-6">
+                                <div class="space-y-2">
+                                    <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-widest px-1">Askı Payı (CM)</label>
+                                    <input id="e-hanger-height" type="number" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900 bg-white" placeholder="100" value="100">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-widest px-1">Raf Payı (CM)</label>
+                                    <input id="e-shelf-height" type="number" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900 bg-white" placeholder="30" value="30">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-widest px-1">Çekmece Payı (CM)</label>
+                                    <input id="e-drawer-height" type="number" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-900 bg-white" placeholder="20" value="20">
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Dynamic Lists -->
                         <div class="space-y-8">
                             <!-- Renkler -->
@@ -3202,6 +3223,11 @@
                 document.getElementById('e-price-h').value = c.pricePerCmHeight || 0;
                 document.getElementById('e-price-d').value = c.pricePerCmDepth || 0;
                 document.getElementById('e-price-partition').value = c.pricePerPartition || 0;
+
+                // Populating Layout Rules
+                document.getElementById('e-hanger-height').value = c.hangerHeight || 100;
+                document.getElementById('e-shelf-height').value = c.shelfHeight || 30;
+                document.getElementById('e-drawer-height').value = c.drawerHeight || 20;
 
                 document.getElementById('e-colors-list').innerHTML = '';
                 (c.colors || []).forEach(clr => AdminConfiguratorUI.addRow('color', 'e', clr));

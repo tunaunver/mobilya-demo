@@ -80,11 +80,24 @@ const StoreLogic = (() => {
     if (!theme) return;
     
     const isTheme2 = theme.layout === 'theme2' || theme.id === 'theme-premium';
-    const homePage = isTheme2 ? 'theme2-index.html' : 'index.html';
+    const prefix = isTheme2 ? 'theme2-' : '';
     
-    // Select all links that point to index.html (with or without ./ prefix)
-    document.querySelectorAll('a[href="index.html"], a[href="./index.html"]').forEach(el => {
-      el.href = homePage;
+    const mapping = [
+      'index.html',
+      'products.html',
+      'contact.html',
+      'about.html'
+    ];
+
+    document.querySelectorAll('a[href]').forEach(el => {
+      const href = el.getAttribute('href');
+      if (!href) return;
+      
+      const cleanHref = href.startsWith('./') ? href.slice(2) : href;
+      
+      if (mapping.includes(cleanHref)) {
+        el.href = prefix + cleanHref;
+      }
     });
   };
 

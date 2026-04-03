@@ -58,6 +58,11 @@ const ShopCore = (() => {
     mapped.basePrice = mapped.price;
     mapped.stock = parseInt(p.stock || 0);
 
+    // Layout Rules Normalization
+    mapped.hangerHeight = parseInt(p.hangerHeight || p.hanger_height || 100);
+    mapped.shelfHeight = parseInt(p.shelfHeight || p.shelf_height || 30);
+    mapped.drawerHeight = parseInt(p.drawerHeight || p.drawer_height || 20);
+
     // Deep merge pricing rules into top-level for legacy shop-core consumers
     if (mapped.pricingRules) {
         mapped.pricePerCmWidth = parseFloat(mapped.pricingRules.pricePerCmWidth || 0);

@@ -198,6 +198,12 @@ window.AdminConfiguratorUI = (() => {
             pricePerCmHeight: parseFloat(document.getElementById(`${prefix}-price-h`)?.value) || 0,
             pricePerCmDepth: parseFloat(document.getElementById(`${prefix}-price-d`)?.value) || 0,
             pricePerPartition: parseFloat(document.getElementById(`${prefix}-price-partition`)?.value) || 0,
+            
+            // Layout Rules
+            hangerHeight: parseInt(document.getElementById(`${prefix}-hanger-height`)?.value) || 100,
+            shelfHeight: parseInt(document.getElementById(`${prefix}-shelf-height`)?.value) || 30,
+            drawerHeight: parseInt(document.getElementById(`${prefix}-drawer-height`)?.value) || 20,
+
             dimensions: {
                 width: { 
                     min: parseInt(document.getElementById(`${prefix}-w-min`)?.value) || 0,
