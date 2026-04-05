@@ -150,35 +150,8 @@ window.AdminConfiguratorUI = (() => {
                     </div>
                 </div>
             `;
-        } else if (type === 'rule') {
-            innerHTML = `
-                <div class="grid grid-cols-12 gap-3 items-end">
-                    <div class="col-span-3">
-                        <label class="text-[9px] font-bold text-gray-400 uppercase mb-1 block px-1">Hedef Nesne</label>
-                        <select class="c-target w-full text-[10px] border border-gray-200 rounded-lg px-2 py-2 bg-white focus:border-aura-gold outline-none">
-                            <option value="drawer" ${data.target === 'drawer' ? 'selected' : ''}>Çekmece</option>
-                            <option value="door" ${data.target === 'door' ? 'selected' : ''}>Kapak</option>
-                            <option value="shelf" ${data.target === 'shelf' ? 'selected' : ''}>Raf</option>
-                            <option value="led-strip" ${data.target === 'led-strip' ? 'selected' : ''}>LED</option>
-                        </select>
-                    </div>
-                    <div class="col-span-6">
-                        <label class="text-[9px] font-bold text-gray-400 uppercase mb-1 block px-1">Hata Mesajı (Kural Bozulduğunda)</label>
-                        <input type="text" class="c-msg w-full text-[10px] border border-gray-200 rounded-lg px-3 py-2 bg-white focus:border-aura-gold outline-none" placeholder="Çekmece için min 40cm derinlik gerekir." value="${data.errorMessage || ''}">
-                    </div>
-                    <div class="col-span-2">
-                        <label class="text-[9px] font-bold text-gray-400 uppercase mb-1 block px-1">Min Ölçü</label>
-                        <input type="number" class="c-min w-full text-[10px] border border-gray-200 rounded-lg px-3 py-2 bg-white focus:border-aura-gold outline-none" placeholder="40" value="${data.min || 0}">
-                    </div>
-                    <div class="col-span-1 flex justify-end pb-1">
-                        <button type="button" onclick="this.closest('.group').remove()" class="text-gray-300 hover:text-red-500 transition-colors p-2">
-                            <i class="ph ph-trash text-lg"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-        } else if (type === 'door' || type === 'handle') {
-            // These are now handled by fixed UI elements in admin.html
+        } else if (type === 'door' || type === 'handle' || type === 'rule') {
+            // Door/Handle are fixed UI. Rule is removed.
             return;
         }
         
@@ -271,34 +244,32 @@ window.AdminConfiguratorUI = (() => {
             }
         });
 
-        // Collect fixed door models
-        const plainPriceInput = document.querySelector(prefix === 'c' ? '.c-door-price' : '#e-door-price-plain');
-        const mirroredPriceInput = document.querySelectorAll(prefix === 'c' ? '.c-door-price' : '.e-door-price')[1];
-        
-        config.doorModels = [
-            { id: 'plain', name: 'Düz Kapak', priceModifier: parseFloat(plainPriceInput?.value) || 0 },
-            { id: 'mirrored', name: 'Aynalı Kapak', priceModifier: parseFloat(mirroredPriceInput?.value) || 0 }
-        ];
-
-        // Handles are now a fixed toggle + price, no longer a list.
-        // The old config.handles array is effectively replaced by top-level handlesEnabled/handlesPrice.
-        // But for backward compatibility with existing code that might expect config.handles:
-        config.handles = config.handlesEnabled ? [{ id: 'standard', name: 'Standart Kulp', priceModifier: config.handlesPrice }] : [];
-
-        // Collect rules
-        document.querySelectorAll(`#${prefix}-rules-list .group`).forEach(row => {
-            const msgEl = row.querySelector('.c-msg');
-            if (msgEl && msgEl.value) {
-                const target = row.querySelector('.c-target').value;
-                config.rules.push({
-                    id: 'rule-' + Date.now() + Math.random(),
-                    target,
-                    property: target === 'drawer' ? 'depth' : 'width', 
-                    min: parseInt(row.querySelector('.c-min')?.value) || 0,
-                    errorMessage: msgEl.value
+        // Collect fixed door models (Toggles) - Only if master switch is ON
+        if (config.doorsEnabled) {
+            const plainEnabled = document.getElementById(`${prefix}-door-plain-enabled`)?.checked;
+            const mirroredEnabled = document.getElementById(`${prefix}-door-mirrored-enabled`)?.checked;
+            
+            if (plainEnabled) {
+                config.doorModels.push({ 
+                    id: 'plain', 
+                    name: 'Düz Kapak', 
+                    priceModifier: parseFloat(document.getElementById(`${prefix}-door-plain-price`)?.value) || 0 
                 });
             }
-        });
+            if (mirroredEnabled) {
+                config.doorModels.push({ 
+                    id: 'mirrored', 
+                    name: 'Aynalı Kapak', 
+                    priceModifier: parseFloat(document.getElementById(`${prefix}-door-mirrored-price`)?.value) || 0 
+                });
+            }
+        }
+
+        // Handles are now a fixed toggle + price - Only if master switch is ON
+        config.handles = config.handlesEnabled ? [{ id: 'standard', name: 'Standart Kulp', priceModifier: config.handlesPrice }] : [];
+
+        // Rules are removed from UI
+        config.rules = [];
 
         return config;
     };

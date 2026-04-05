@@ -24,6 +24,9 @@
                             50: '#f9fafb',
                             100: '#f4f1ed',
                             900: '#111827'
+                        },
+                        aura: {
+                            gold: '#d4af37'
                         }
                     }
                 }
@@ -394,7 +397,7 @@
                                                 <div class="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
                                                     <label class="relative inline-flex items-center cursor-pointer">
                                                         <input id="c-doors-enabled" type="checkbox" class="sr-only peer" checked onchange="AdminConfiguratorUI.handleDoorsToggle('c')">
-                                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-aura-gold"></div>
+                                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20
                                                     </label>
                                                     <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Kapak Sistemi Aktif</span>
                                                 </div>
@@ -523,30 +526,40 @@
                                         <div id="c-modules-list" class="space-y-3"></div>
                                     </div>
 
-                                    <!-- Kapak Modelleri (Fixed 2 Options) -->
+                                    <!-- Kapak Modelleri (Fixed Toggles) -->
                                     <div id="c-door-models-section" class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
                                         <div class="flex justify-between items-center border-b pb-4">
                                             <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                                                <i class="ph ph-layout text-lg text-aura-gold"></i> KAPAK MODELLERİ (SABİT)
+                                                <i class="ph ph-layout text-lg text-aura-gold"></i> KAPAK MODELLERİ
                                             </h5>
                                         </div>
                                         <div class="grid grid-cols-2 gap-6">
-                                            <div class="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Düz Kapak</span>
-                                                <input type="hidden" class="c-door-id" value="plain">
-                                                <input type="hidden" class="c-door-name" value="Düz Kapak">
+                                            <!-- Düz Kapak -->
+                                            <div class="space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col justify-between">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Düz Kapak</span>
+                                                    <label class="relative inline-flex items-center cursor-pointer">
+                                                        <input id="c-door-plain-enabled" type="checkbox" class="sr-only peer" checked>
+                                                        <div class="w-8 h-4 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20
+                                                    </label>
+                                                </div>
                                                 <div class="flex items-center gap-2">
-                                                    <span class="text-[9px] text-gray-400 font-bold">Fiyat (+₺)</span>
-                                                    <input type="number" class="c-door-price w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none" value="0">
+                                                    <span class="text-[9px] text-gray-400 font-bold uppercase whitespace-nowrap">FİYAT (+₺)</span>
+                                                    <input id="c-door-plain-price" type="number" class="w-full text-xs border border-gray-200 rounded px-2 py-1.5 outline-none focus:border-aura-gold transition-colors" value="0">
                                                 </div>
                                             </div>
-                                            <div class="space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Aynalı Kapak</span>
-                                                <input type="hidden" class="c-door-id" value="mirrored">
-                                                <input type="hidden" class="c-door-name" value="Aynalı Kapak">
+                                            <!-- Aynalı Kapak -->
+                                            <div class="space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col justify-between">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Aynalı Kapak</span>
+                                                    <label class="relative inline-flex items-center cursor-pointer">
+                                                        <input id="c-door-mirrored-enabled" type="checkbox" class="sr-only peer" checked>
+                                                        <div class="w-8 h-4 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20
+                                                    </label>
+                                                </div>
                                                 <div class="flex items-center gap-2">
-                                                    <span class="text-[9px] text-gray-400 font-bold">Fiyat (+₺)</span>
-                                                    <input type="number" class="c-door-price w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none" value="500">
+                                                    <span class="text-[9px] text-gray-400 font-bold uppercase whitespace-nowrap">FİYAT (+₺)</span>
+                                                    <input id="c-door-mirrored-price" type="number" class="w-full text-xs border border-gray-200 rounded px-2 py-1.5 outline-none focus:border-aura-gold transition-colors" value="500">
                                                 </div>
                                             </div>
                                         </div>
@@ -563,7 +576,7 @@
                                             <div class="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
                                                 <label class="relative inline-flex items-center cursor-pointer">
                                                     <input id="c-handles-enabled" type="checkbox" class="sr-only peer" checked>
-                                                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-aura-gold"></div>
+                                                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20
                                                 </label>
                                                 <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Kulplar Aktif</span>
                                             </div>
@@ -572,19 +585,6 @@
                                                 <input id="c-handles-price" type="number" class="flex-1 text-xs bg-transparent outline-none border-b border-gray-200 focus:border-aura-gold" value="50">
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <!-- Kurallar -->
-                                    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
-                                        <div class="flex justify-between items-center border-b pb-4">
-                                            <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                                                <i class="ph ph-shield-check text-lg text-aura-gold"></i> İŞ KURALLARI
-                                            </h5>
-                                            <button type="button" onclick="AdminConfiguratorUI.addRow('rule')" class="text-[10px] bg-gray-900 text-white px-4 py-2 rounded-lg uppercase font-bold tracking-widest hover:bg-aura-gold transition-colors flex items-center gap-2 shadow-sm">
-                                                <i class="ph ph-plus-circle"></i> KURAL EKLE
-                                            </button>
-                                        </div>
-                                        <div id="c-rules-list" class="space-y-3"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1573,7 +1573,7 @@
                     </button>
                 </div>
             </div>
-            <form id="edit-product-form" class="p-8 space-y-6 overflow-y-auto">
+            <form id="edit-product-form" class="p-8 space-y-6 overflow-y-auto" novalidate>
                 <input type="hidden" id="edit-product-id">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="md:col-span-2">
@@ -1603,14 +1603,12 @@
                             <input id="edit-price" type="number" step="0.01" min="0"
                                 class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 text-sm transition-all">
                         </div>
-                                <div class="mb-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Genel Stok *</label>
-                                    <input id="edit-stock" type="number" step="1" min="0"
-                                        class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 text-sm transition-all">
-                                </div>
-                            </div>
-
-                            <!-- Düzenleme için Modüler Alan -->
+                        <div class="mb-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Genel Stok *</label>
+                            <input id="edit-stock" type="number" step="1" min="0"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 text-sm transition-all">
+                        </div>
+                    </div>
                             <div id="edit-modular-fields"
                                 class="md:col-span-2 hidden bg-gray-50 p-6 rounded-xl border border-gray-200">
                                 <div class="flex justify-between items-center mb-6">
@@ -1649,10 +1647,10 @@
                                                 </select>
 
                                                 <div class="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
-                                                    <label class="relative inline-flex items-center cursor-pointer">
-                                                        <input id="e-doors-enabled" type="checkbox" class="sr-only peer" onchange="AdminConfiguratorUI.handleDoorsToggle('e')">
-                                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-aura-gold"></div>
-                                                    </label>
+                                                <label class="relative inline-flex items-center cursor-pointer">
+                                                    <input id="e-doors-enabled" type="checkbox" class="sr-only peer" onchange="AdminConfiguratorUI.handleDoorsToggle('e')">
+                                                    <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20"></div>
+                                                </label>
                                                     <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Kapak Sistemi Aktif</span>
                                                 </div>
                                             </div>
@@ -1801,30 +1799,40 @@
                                 <div id="e-modules-list" class="space-y-3"></div>
                             </div>
 
-                            <!-- Kapak Modelleri (Edit, Fixed 2 Options) -->
+                            <!-- Kapak Modelleri (Edit Toggles) -->
                             <div id="e-door-models-section" class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
                                 <div class="flex justify-between items-center border-b pb-4">
                                     <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                                        <i class="ph ph-layout text-lg text-aura-gold"></i> KAPAK MODELLERİ (SABİT)
+                                        <i class="ph ph-layout text-lg text-aura-gold"></i> KAPAK MODELLERİ
                                     </h5>
                                 </div>
                                 <div class="grid grid-cols-2 gap-6">
-                                    <div class="door-row-plain space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Düz Kapak</span>
-                                        <input type="hidden" class="e-door-id" value="plain">
-                                        <input type="hidden" class="e-door-name" value="Düz Kapak">
+                                    <!-- Düz Kapak -->
+                                    <div class="door-row-plain space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col justify-between">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Düz Kapak</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input id="e-door-plain-enabled" type="checkbox" class="sr-only peer">
+                                                <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20"></div>
+                                            </label>
+                                        </div>
                                         <div class="flex items-center gap-2">
-                                            <span class="text-[9px] text-gray-400 font-bold">Fiyat (+₺)</span>
-                                            <input id="e-door-price-plain" type="number" class="e-door-price w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none" value="0">
+                                            <span class="text-[9px] text-gray-400 font-bold uppercase whitespace-nowrap">FİYAT (+₺)</span>
+                                            <input id="e-door-plain-price" type="number" class="w-full text-xs border border-gray-200 rounded px-2 py-1.5 outline-none focus:border-aura-gold transition-colors" value="0">
                                         </div>
                                     </div>
-                                    <div class="door-row-mirrored space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Aynalı Kapak</span>
-                                        <input type="hidden" class="e-door-id" value="mirrored">
-                                        <input type="hidden" class="e-door-name" value="Aynalı Kapak">
+                                    <!-- Aynalı Kapak -->
+                                    <div class="door-row-mirrored space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col justify-between">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Aynalı Kapak</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input id="e-door-mirrored-enabled" type="checkbox" class="sr-only peer">
+                                                <div class="w-8 h-4 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20
+                                            </label>
+                                        </div>
                                         <div class="flex items-center gap-2">
-                                            <span class="text-[9px] text-gray-400 font-bold">Fiyat (+₺)</span>
-                                            <input id="e-door-price-mirrored" type="number" class="e-door-price w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none" value="500">
+                                            <span class="text-[9px] text-gray-400 font-bold uppercase whitespace-nowrap">FİYAT (+₺)</span>
+                                            <input id="e-door-mirrored-price" type="number" class="w-full text-xs border border-gray-200 rounded px-2 py-1.5 outline-none focus:border-aura-gold transition-colors" value="500">
                                         </div>
                                     </div>
                                 </div>
@@ -1841,7 +1849,7 @@
                                     <div class="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input id="e-handles-enabled" type="checkbox" class="sr-only peer">
-                                            <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-aura-gold"></div>
+                                            <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600 shadow-lg shadow-green-500/20"></div>
                                         </label>
                                         <span class="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Kulplar Aktif</span>
                                     </div>
@@ -1851,22 +1859,10 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Kurallar -->
-                            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
-                                <div class="flex justify-between items-center border-b pb-4">
-                                    <h5 class="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                                        <i class="ph ph-shield-check text-lg text-aura-gold"></i> İŞ KURALLARI
-                                    </h5>
-                                    <button type="button" onclick="AdminConfiguratorUI.addRow('rule', 'e')" class="text-[10px] bg-gray-900 text-white px-4 py-2 rounded-lg uppercase font-bold tracking-widest hover:bg-aura-gold transition-colors flex items-center gap-2 shadow-sm">
-                                        <i class="ph ph-plus-circle"></i> KURAL EKLE
-                                    </button>
-                                </div>
-                                <div id="e-rules-list" class="space-y-3"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
+                        </div> <!-- end of dynamic lists space-y-8 -->
+                    </div> <!-- end of edit-configurator-fields -->
+                    
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Kategori *</label>
                         <select id="edit-category"
                             class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 text-sm transition-all bg-white"
@@ -2116,6 +2112,16 @@
         // ═══════════════════════════════════════════════════════════════
         //  GLOBAL TOAST NOTIFICATION
         // ═══════════════════════════════════════════════════════════════
+        // Global Error Handler for better debugging
+        window.onerror = function(msg, url, line, col, error) {
+            console.error('AURA Global Error:', msg, 'at', line, ':', col);
+            if (typeof showToast === 'function') {
+                showToast('Hata: ' + msg, 'error');
+            } else {
+                alert('Sistem Hatası: ' + msg);
+            }
+        };
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if (!container) return;
@@ -2410,8 +2416,6 @@
             await ShopCore.loadCache();
             
             // 2. Initial Seeding if database is completely empty (OPTIONAL)
-            // Note: Since we have MySQL now, seeding should ideally be handled by migration scripts.
-            // But we can keep seedFromJson if it's still used for local JSON fallback.
             await seedFromJson(); 
 
             // 3. Render all UI components
@@ -2421,6 +2425,12 @@
             renderProductTable();
             loadThemeSettings(); 
             updateSiteLinkButton();
+
+            // 4. Initialize Configurator Toggles
+            if (window.AdminConfiguratorUI) {
+                AdminConfiguratorUI.initToggles('new');
+                AdminConfiguratorUI.initToggles('edit');
+            }
             
             console.log('AURA Admin: Initialization complete.');
         });
@@ -3172,9 +3182,11 @@
             renderProductTable();
         }
 
-        function editProduct(id) {
+        async function editProduct(id) {
             console.log('AURA Admin: editProduct called for ID:', id);
             const products = getProducts() || [];
+            const categories = await ShopCore.fetchCategories();
+            
             const p = products.find(prod => prod.id === id);
             if (!p) {
                 console.error('AURA Admin: Product not found for ID:', id);
@@ -3182,13 +3194,27 @@
             }
             console.log('AURA Admin: Editing product:', p);
 
-            const modConfig = document.getElementById('edit-modular-fields');
-            const confFields = document.getElementById('edit-configurator-fields');
-
             // Fill basic fields
             document.getElementById('edit-product-id').value = p.id;
             document.getElementById('edit-name').value = p.name;
-            document.getElementById('edit-category').value = p.category || p.category_id || '';
+            
+            // Category Matching (ID or Name)
+            let catId = p.category || p.category_id || '';
+            if (catId && !categories.find(c => c.id === catId)) {
+                // If catId is a name (legacy), find the matching ID
+                const found = categories.find(c => c.name === catId);
+                if (found) catId = found.id;
+            }
+            
+            // Set value with a small delay to ensure select options are generated
+            setTimeout(() => {
+                const catEl = document.getElementById('edit-category');
+                if (catEl) {
+                    catEl.value = catId;
+                    console.log('AURA Admin: Category selected:', catId);
+                }
+            }, 50);
+            
             document.getElementById('edit-type').value = p.type || 'simple';
             document.getElementById('edit-price').value = p.price || 0;
             document.getElementById('edit-stock').value = p.stock || 0;
@@ -3238,21 +3264,23 @@
                 document.getElementById('e-modules-list').innerHTML = '';
                 (c.modules || []).forEach(md => AdminConfiguratorUI.addRow('module', 'e', md));
 
-                // Populating Fixed Doors
+                // Populating Door Toggles (Now using fixed model check)
                 if (c.doorModels) {
                     const plain = c.doorModels.find(m => m.id === 'plain');
                     const mirrored = c.doorModels.find(m => m.id === 'mirrored');
-                    if (plain) document.getElementById('e-door-price-plain').value = plain.priceModifier || 0;
-                    if (mirrored) document.getElementById('e-door-price-mirrored').value = mirrored.priceModifier || 0;
+                    
+                    document.getElementById('e-door-plain-enabled').checked = !!plain;
+                    document.getElementById('e-door-plain-price').value = plain ? (plain.priceModifier || 0) : 0;
+                    
+                    document.getElementById('e-door-mirrored-enabled').checked = !!mirrored;
+                    document.getElementById('e-door-mirrored-price').value = mirrored ? (mirrored.priceModifier || 0) : 500;
                 }
 
                 // Populating Simplified Handles
                 document.getElementById('e-handles-enabled').checked = !!c.handlesEnabled;
                 document.getElementById('e-handles-price').value = c.handlesPrice || 50;
                 
-                const rules = Array.isArray(c.rules) ? c.rules : [];
-                document.getElementById('e-rules-list').innerHTML = '';
-                rules.forEach(r => AdminConfiguratorUI.addRow('rule', 'e', r));
+                // Rules are removed from UI mapping
                 
             } else if (p.type === 'modular') {
                 AdminModular.renderModules(p.modules || []);
@@ -3513,36 +3541,79 @@
 
         document.getElementById('edit-product-form').addEventListener('submit', async e => {
             e.preventDefault();
-            const type = document.getElementById('edit-type').value;
-            const modules = type === 'modular' ? AdminModular.getModulesData() : [];
-
-            const productData = {
-                id: document.getElementById('edit-product-id').value,
-                name: document.getElementById('edit-name').value,
-                desc: document.getElementById('edit-description').value,
-                category: document.getElementById('edit-category').value,
-                type: type,
-                price: parseFloat(document.getElementById('edit-price').value) || 0,
-                stock: parseInt(document.getElementById('edit-stock').value) || 0,
-                images: currentEditImages,
-                modules: modules,
-                ...(type === 'configurator' ? AdminConfiguratorUI.getData('e') : {}),
-                // SEO Fields
-                seoTitle: document.getElementById('edit-seo-title').value,
-                seoDescription: document.getElementById('edit-seo-description').value,
-                slug: document.getElementById('edit-seo-slug').value
-            };
-
-            const res = await ShopCore.saveProduct(productData);
-            if (res && res.success) {
-                markAsSaved();
-                showToast('Ürün başarıyla güncellendi.');
-            } else {
-                showToast('Hata: ' + (res?.details || 'Güncellenemedi'), 'error');
-                return;
+            console.log('AURA Admin: Edit Form Submit Clicked');
+            
+            // Explicitly find the button even if struct is slightly off
+            const btn = e.submitter || e.target.querySelector('button[type="submit"]') || document.querySelector('#edit-modal button[type="submit"]');
+            if (!btn) {
+                console.error('AURA Admin: Submit button NOT found!');
             }
-            closeEditModal();
-            renderProductTable();
+            
+            const originalText = btn.innerHTML;
+            
+            try {
+                console.log('AURA Admin: Starting save process...');
+                btn.innerHTML = '<i class="ph ph-spinner animate-spin mr-2"></i>Kaydediliyor...';
+                btn.disabled = true;
+
+                const type = document.getElementById('edit-type').value;
+                let modules = [];
+                try {
+                    modules = type === 'modular' && window.AdminModular ? AdminModular.getModulesData() : [];
+                } catch (modErr) {
+                    console.warn('AURA Admin: Modular data collection failed:', modErr);
+                }
+
+                let configuratorData = {};
+                try {
+                    configuratorData = type === 'configurator' && window.AdminConfiguratorUI ? AdminConfiguratorUI.getData('e') : {};
+                } catch (confErr) {
+                    console.warn('AURA Admin: Configurator data collection failed:', confErr);
+                }
+
+                const productData = {
+                    id: document.getElementById('edit-product-id').value,
+                    name: document.getElementById('edit-name').value,
+                    desc: document.getElementById('edit-description').value,
+                    category: document.getElementById('edit-category').value,
+                    type: type,
+                    price: parseFloat(document.getElementById('edit-price').value) || 0,
+                    stock: parseInt(document.getElementById('edit-stock').value) || 0,
+                    images: currentEditImages,
+                    modules: modules,
+                    ...configuratorData,
+                    // SEO Fields
+                    seoTitle: document.getElementById('edit-seo-title').value,
+                    seoDescription: document.getElementById('edit-seo-description').value,
+                    slug: document.getElementById('edit-seo-slug').value,
+                    isNew: document.getElementById('edit-isnew').checked
+                };
+
+                console.log('AURA Admin: Submitting product data:', productData);
+                
+                if (!productData || !productData.id) {
+                    throw new Error("Ürün ID'si bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.");
+                }
+
+                const res = await ShopCore.saveProduct(productData);
+                console.log('AURA Admin: Save response:', res);
+                
+                if (res && (res.success || !res.error)) {
+                    markAsSaved();
+                    showToast('Ürün başarıyla güncellendi.');
+                    closeEditModal();
+                    renderProductTable();
+                } else {
+                    console.error('AURA Admin: Save failed at API level:', res);
+                    showToast('Hata: ' + (res?.details || 'Güncellenemedi'), 'error');
+                }
+            } catch (err) {
+                console.error('AURA Admin: Save Crash:', err);
+                showToast('Beklenmedik bir hata oluştu: ' + err.message, 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         });
 
         // Modular/Configurator Type Toggle Listeners Managed by AdminConfiguratorUI.initToggles()
@@ -3654,21 +3725,8 @@
             e.target.value = '';
         });
 
-        // Initialize logic on load
-        document.addEventListener('DOMContentLoaded', () => {
-            if (!localStorage.getItem(CATEGORY_STORE_KEY)) {
-                saveCategories(DEFAULT_CATEGORIES);
-            } else {
-                renderCategoryList();
-                renderCategoryDropdowns();
-            }
-            
-            // Initialize Configurator Toggles
-            if (window.AdminConfiguratorUI) {
-                AdminConfiguratorUI.initToggles('new');
-                AdminConfiguratorUI.initToggles('edit');
-            }
-        });
+         // Initialize logic on load
+
         const THEME_STORE_KEY = 'aura_theme_settings';
 
         const DEFAULT_THEME_SETTINGS = {
@@ -4029,34 +4087,43 @@
         async function selectThemePreset(themeId) {
             if (!currentThemeSettings) return;
 
-            // Add visual "closing" effect
-            const formFields = document.getElementById('theme-form-fields');
-            if (formFields) {
-                formFields.classList.add('opacity-0');
-                formFields.classList.remove('opacity-100');
+            try {
+                // Add visual "closing" effect
+                const formFields = document.getElementById('theme-form-fields');
+                if (formFields) {
+                    formFields.classList.add('opacity-0');
+                    formFields.classList.remove('opacity-100');
 
-                setTimeout(async () => {
+                    setTimeout(async () => {
+                        currentThemeSettings.activeThemeId = themeId;
+                        
+                        // Immediate database persistence
+                        await ShopCore.saveThemeSettings(currentThemeSettings);
+                        
+                        markAsSaved();
+                        renderThemePresets();
+                        populateFormWithActiveTheme();
+                        showToast(`${themeId} aktifleştirildi.`);
+
+                        // "Open" effect
+                        setTimeout(() => {
+                            formFields.classList.remove('opacity-0');
+                            formFields.classList.add('opacity-100');
+                        }, 50);
+
+                    }, 300); // Wait for fade out
+                } else {
                     currentThemeSettings.activeThemeId = themeId;
-                    
-                    // Immediate database persistence
                     await ShopCore.saveThemeSettings(currentThemeSettings);
-                    
                     markAsSaved();
                     renderThemePresets();
                     populateFormWithActiveTheme();
-                    showToast(`${themeId} aktifleştirildi.`);
-
-                    // "Open" effect
-                    setTimeout(() => {
-                        formFields.classList.remove('opacity-0');
-                        formFields.classList.add('opacity-100');
-                    }, 50);
-
-                }, 300); // Wait for fade out
-            } else {
-                currentThemeSettings.activeThemeId = themeId;
-                await ShopCore.saveThemeSettings(currentThemeSettings);
-                markAsSaved();
+                }
+            } catch (err) {
+                console.error('[Admin] selectThemePreset failed:', err);
+                showToast('Tema seçilirken hata oluştu, ancak yerel olarak uygulandı.', 'error');
+                
+                // Final fallback to update UI anyway
                 renderThemePresets();
                 populateFormWithActiveTheme();
             }
@@ -4103,13 +4170,30 @@
         }
 
         async function loadThemeSettings() {
-            const settings = await ShopCore.getThemeSettings();
-            if (settings && settings.themes && settings.themes.length > 0) {
-                currentThemeSettings = settings;
-            } else {
-                currentThemeSettings = JSON.parse(JSON.stringify(DEFAULT_THEME_SETTINGS));
+            try {
+                const settings = await ShopCore.getThemeSettings();
+                if (settings && settings.themes && settings.themes.length > 0) {
+                    currentThemeSettings = settings;
+                } else {
+                    const local = localStorage.getItem(THEME_STORE_KEY);
+                    if (local) {
+                        console.log('[Admin] API failed, using cached settings from localStorage.');
+                        currentThemeSettings = JSON.parse(local);
+                    } else {
+                        console.log('[Admin] Themes not found in API or localStorage, using defaults.');
+                        currentThemeSettings = JSON.parse(JSON.stringify(DEFAULT_THEME_SETTINGS));
+                    }
+                }
+            } catch (err) {
+                console.error('[Admin] loadThemeSettings failed:', err);
+                const local = localStorage.getItem(THEME_STORE_KEY);
+                if (local) {
+                    currentThemeSettings = JSON.parse(local);
+                } else {
+                    currentThemeSettings = JSON.parse(JSON.stringify(DEFAULT_THEME_SETTINGS));
+                }
             }
-
+            
             // Handle migrations from old single-object format to the new multi-theme format
             if (!currentThemeSettings.themes) {
                 // Wrap the old object into the new array structure
@@ -4204,8 +4288,8 @@
                     delete t.hero.desc;
                     delete t.hero.btnText;
                     delete t.hero.btnLink;
-                    delete t2NewSeasonProducts;
-                    delete t2SignatureProducts;
+                    delete t.t2NewSeasonProducts;
+                    delete t.t2SignatureProducts;
                 }
 
                 // Patch productFeatures if missing
@@ -4284,7 +4368,7 @@
                         <span class="mr-2 text-[10px] font-bold uppercase tracking-widest ${isActive ? 'text-green-600' : 'text-gray-400'}">${isActive ? 'Aktif' : 'Pasif'}</span>
                         <div class="relative">
                             <input type="checkbox" id="cat-active-${idx}" class="sr-only peer" ${isActive ? 'checked' : ''} onchange="this.closest('.rounded-xl').classList.toggle('opacity-60'); this.previousElementSibling.innerText = this.checked ? 'Aktif' : 'Pasif'; this.previousElementSibling.classList.toggle('text-green-600'); this.previousElementSibling.classList.toggle('text-gray-400')">
-                            <div class="block bg-gray-200 w-8 h-5 rounded-full shadow-inner peer-checked:bg-gray-900 transition-colors"></div>
+                            <div class="block bg-gray-200 w-8 h-5 rounded-full shadow-inner peer-checked:bg-green-600 transition-colors shadow-lg shadow-green-500/20"></div>
                             <div class="absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition-transform peer-checked:translate-x-3"></div>
                         </div>
                     </label>

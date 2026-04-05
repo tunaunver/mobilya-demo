@@ -14,7 +14,7 @@ window.createConfigurator = function(product) {
         selectedColor: (product.colors && product.colors.length > 0) ? product.colors[0].id : null,
         selectedMaterial: (product.materials && product.materials.length > 0) ? product.materials[0].id : null,
         partitionCount: defaultData.defaultPartitions || 1,
-        handlesEnabled: product.handlesEnabled ?? true,
+        handlesEnabled: (product.handlesEnabled !== undefined) ? product.handlesEnabled : true,
         selectedModules: {}, 
         rotation: -25, 
         errors: []
@@ -187,9 +187,9 @@ window.createConfigurator = function(product) {
             }
         });
 
-        // Global Handle Price (Simplified)
+        // Global Handle Price (Per Partition)
         if (state.handlesEnabled) {
-            const hPrice = product.handlesPrice || 50; 
+            const hPrice = (product.handlesPrice !== undefined) ? product.handlesPrice : 50; 
             total += (hPrice * state.partitionCount);
         }
 

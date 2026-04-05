@@ -60,12 +60,14 @@ window.renderPreview = function(container, summary) {
     const content = document.createElement('div');
     content.className = 'absolute inset-0 flex';
     content.style.transform = `translateZ(${-sd/2 + 2}px)`; // Slightly forward from back
+    content.style.transformStyle = 'preserve-3d'; // CRITICAL: Allow children to have their own 3D space
     content.style.width = `${sw}px`;
     content.style.height = `${sh}px`;
 
     for (let i = 1; i <= partitionCount; i++) {
         const partition = document.createElement('div');
         partition.className = 'flex-1 relative border-r border-black/10 last:border-r-0';
+        partition.style.transformStyle = 'preserve-3d'; // CRITICAL: Allow doors to render in 3D relative to partition
         
         const data = selectedModules[`partition_${i}`] || { shelfCount: 0, drawerCount: 0, doorModel: 'none' };
         
@@ -128,7 +130,8 @@ window.renderPreview = function(container, summary) {
         if (data.doorModel && data.doorModel !== 'none') {
             const door = document.createElement('div');
             door.className = 'absolute inset-0 z-20 transition-all duration-700 origin-left border border-black/10';
-            door.style.transform = `translateZ(${sd/2 + 1}px)`; // Front face
+            door.style.transform = `translateZ(${sd/2 + 2}px)`; // Front face (Move slightly more forward)
+            door.style.transformStyle = 'preserve-3d'; 
             door.style.backgroundColor = hex;
 
             if (data.doorModel === 'panel' || data.doorModel === 'plain') {
@@ -149,10 +152,12 @@ window.renderPreview = function(container, summary) {
                 door.style.backgroundColor = hex;
             }
 
-            // Handle (Simplified)
+            // Handle (Enhanced Visibility)
             if (configuration.handlesEnabled) {
                 const h = document.createElement('div');
-                h.className = 'absolute right-2 top-1/2 -translate-y-1/2 w-1 h-1/3 bg-gray-500 rounded-full shadow-sm';
+                // Use absolute positioning relative to the door's 3D plane
+                h.className = 'absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-[30%] bg-zinc-800 rounded-full shadow-lg border-r border-white/10';
+                h.style.transform = 'translateZ(3px)'; // Pop the handle out 3px from the door
                 door.appendChild(h);
             }
             partition.appendChild(door);
@@ -161,6 +166,7 @@ window.renderPreview = function(container, summary) {
         content.appendChild(partition);
     }
     scene.appendChild(content);
+
 
     // DIMENSION LABELS (SVG)
     const labels = document.createElement('div');

@@ -214,52 +214,42 @@
         let activeFilter = 'all';
 
         document.addEventListener('DOMContentLoaded', async () => {
+            // Single load: fetch all data only once, then render
             await ShopCore.loadCache();
-            await loadCategories();
-            loadProducts();
-            
+            allProducts = ShopCore.getProducts();
+            allCategories = ShopCore.getCategories();
+
+            renderCategoryTabs();
+            renderGrid();
+
             // Check for category in URL
             const urlParams = new URLSearchParams(window.location.search);
             const catParam = urlParams.get('category');
             if (catParam) {
-                // Wait slightly for DOM injection
-                setTimeout(() => filterProducts(catParam), 100);
+                filterProducts(catParam);
             }
         });
 
-        async function loadCategories() {
-            try {
-                allCategories = await ShopCore.fetchCategories();
-                if (allCategories && allCategories.length) {
-                    const tabsContainer = document.getElementById('t2-category-filters');
-                    
-                    let html = `<button onclick="filterProducts('all')" class="cat-btn active text-sm tracking-widest uppercase text-gray-900 font-medium" data-cat="all">Tümü</button>`;
-                    
-                    allCategories.forEach(cat => {
-                        const id = typeof cat === 'string' ? cat : cat.id;
-                        const name = typeof cat === 'string' ? cat : cat.name;
-                        html += `<button onclick="filterProducts('${id}')" class="cat-btn text-sm tracking-widest uppercase text-gray-400 hover:text-gray-900 transition-colors" data-cat="${id}">${name}</button>`;
-                    });
-                    tabsContainer.innerHTML = html;
-                }
-            } catch(e) { console.error(e); }
-        }
+        function renderCategoryTabs() {
+            const tabsContainer = document.getElementById('t2-category-filters');
+            if (!allCategories || !allCategories.length) return;
 
-        function loadProducts() {
-            try {
-                allProducts = ShopCore.getProducts();
-                if (allProducts && allProducts.length) {
-                    renderGrid();
-                }
-            } catch(e) { console.error(e); }
+            let html = `<button onclick="filterProducts('all')" class="cat-btn text-sm tracking-widest uppercase text-gray-900 font-medium" data-cat="all">Tümü</button>`;
+
+            allCategories.forEach(cat => {
+                const id = String(typeof cat === 'string' ? cat : cat.id);
+                const name = typeof cat === 'string' ? cat : cat.name;
+                html += `<button onclick="filterProducts('${id}')" class="cat-btn text-sm tracking-widest uppercase text-gray-400 hover:text-gray-900 transition-colors" data-cat="${id}">${name}</button>`;
+            });
+            tabsContainer.innerHTML = html;
         }
 
         function filterProducts(catId) {
-            activeFilter = catId;
-            
-            // Update active states
+            activeFilter = String(catId);
+
+            // Update active button states
             document.querySelectorAll('.cat-btn').forEach(btn => {
-                if(btn.dataset.cat === catId) {
+                if (btn.dataset.cat === activeFilter) {
                     btn.classList.add('text-gray-900', 'font-medium');
                     btn.classList.remove('text-gray-400');
                 } else {
@@ -276,7 +266,8 @@
             
             let filtered = allProducts;
             if (activeFilter !== 'all') {
-                filtered = allProducts.filter(p => p.category === activeFilter);
+                // String() comparison handles int/string mismatch from MySQL
+                filtered = allProducts.filter(p => String(p.category) === String(activeFilter));
             }
 
             if (filtered.length === 0) {
@@ -291,7 +282,7 @@
                     return `
                         <div class="group reveal" style="transition-delay: ${delay}ms">
                             <a href="${link}" class="block aspect-square overflow-hidden bg-gray-100 mb-6 img-zoom-container rounded-2xl relative shadow-sm border border-gray-100">
-                                <img src="${imgUrl}" class="w-full h-full object-cover" alt="${p.name}">
+                                <img src="${imgUrl}" class="w-full h-full object-cover" alt="${p.name}" loading="lazy">
                                 
                                 <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
                                     <div class="bg-gray-900 text-white text-[10px] font-bold uppercase tracking-widest px-8 py-3 rounded-full scale-90 group-hover:scale-100 transition-transform">
@@ -312,12 +303,11 @@
             }
             // Trigger animation for newly injected items
             setTimeout(reveal, 50);
-            reveal(); // Initial call as well
         }
 
         function getCategoryName(catId) {
             if (!allCategories || allCategories.length === 0) return catId;
-            const cat = allCategories.find(c => (typeof c === 'string' ? c : c.id) === catId);
+            const cat = allCategories.find(c => String(typeof c === 'string' ? c : c.id) === String(catId));
             return cat ? (typeof cat === 'string' ? cat : cat.name) : catId;
         }
 
