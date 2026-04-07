@@ -98,6 +98,106 @@ try {
         echo "Configurator products seeded.\n";
     }
 
+    // 4. Seed Theme Settings
+    $pdo->exec("TRUNCATE TABLE theme_settings");
+    $themeSettings = [
+        'activeThemeId' => 'theme-default',
+        'themes' => [
+            [
+                'id' => 'theme-default',
+                'name' => 'Varsayılan Tema',
+                'layout' => 'theme1',
+                'hero' => ['slides' => []],
+                'catSectionTitle' => 'Özel Kategoriler',
+                'story' => [
+                    'imgBase64' => '',
+                    'subtitle' => 'Felsefemiz',
+                    'title' => 'Ruha hitap eden tasarım.',
+                    'desc' => 'Mekanınızın özünüzü yansıtması gerektiğine inanıyoruz.'
+                ],
+                'categories' => [
+                    ['id' => "cat-1", 'imgBase64' => '', 'title' => 'Oturma', 'link' => 'products.html?category=seating', 'active' => true],
+                    ['id' => "cat-2", 'imgBase64' => '', 'title' => 'Masalar', 'link' => 'products.html?category=tables', 'active' => true],
+                    ['id' => "cat-3", 'imgBase64' => '', 'title' => 'Aydınlatma', 'link' => 'products.html?category=lighting', 'active' => true],
+                    ['id' => "cat-4", 'imgBase64' => '', 'title' => 'Yatak Odası', 'link' => 'products.html?category=bedroom', 'active' => true],
+                    ['id' => "cat-5", 'imgBase64' => '', 'title' => 'Depolama', 'link' => 'products.html?category=storage', 'active' => true],
+                    ['id' => "cat-6", 'imgBase64' => '', 'title' => 'Aksesuarlar', 'link' => 'products.html?category=accessories', 'active' => true],
+                    ['id' => "cat-7", 'imgBase64' => '', 'title' => 'Dış Mekan', 'link' => 'products.html?category=outdoor', 'active' => true],
+                    ['id' => "cat-8", 'imgBase64' => '', 'title' => 'Ofis', 'link' => 'products.html?category=office', 'active' => true]
+                ],
+                'galSectionTitle' => 'Proje Galerisi',
+                'galSectionDesc' => 'AURA mobilyalarının mekanları nasıl dönüştürdüğünü görün.',
+                'galCardTitle' => 'Mekanınızı Tasarlayın',
+                'galCardDesc' => 'Hayallerinizdeki evi yaratmak için bizimle iletişime geçin.',
+                'about' => [
+                    'heroImg' => 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000',
+                    'heroTitle' => 'Hikayemiz',
+                    'heroSubtitle' => 'Tasarım aracılığıyla huzur yaratmak.',
+                    'philQuote' => '"Etrafımızı saran nesnelerin iç huzurumuzu derinden etkilediğine inanıyoruz."',
+                    'philDesc' => 'Modern yaşamın karmaşasından uzak, dingin ve anlamlı alanlar yaratıyoruz.',
+                    'craftTitle' => 'Sürdürülebilir İşçilik',
+                    'craftDesc1' => "AURA'nın her bir mobilya parçası hayata sorumlu şekilde tedarik edilen malzemelerle başlar.",
+                    'craftDesc2' => 'Usta zanaatkarlarımız, zamana meydan okuyan doğrama tekniklerini kullanıyor.',
+                    'craftImg' => 'https://images.unsplash.com/photo-1596079890744-c1a0462d0975?auto=format&fit=crop&q=80&w=1000'
+                ],
+                'gallery' => [
+                    ['id' => 'gal-1', 'imgBase64' => '', 'text' => 'Modern Salon'],
+                    ['id' => 'gal-2', 'imgBase64' => '', 'text' => 'Yemek Odası'],
+                    ['id' => 'gal-3', 'imgBase64' => '', 'text' => 'Yatak Odası'],
+                    ['id' => 'gal-4', 'imgBase64' => '', 'text' => 'Mutfak Detay'],
+                    ['id' => 'gal-5', 'imgBase64' => '', 'text' => 'Çalışma Köşesi']
+                ],
+                'footer' => [
+                    'address' => 'Nişantaşı, İstanbul',
+                    'email' => 'info@auramobilya.com',
+                    'phone' => '+90 555 123 45 67',
+                    'whatsapp' => '905551234567',
+                    'footerDesc' => 'Modern mobilya tasarımında öncü marka.'
+                ],
+                'productFeatures' => [
+                    ['icon' => 'ph-ruler', 'text' => 'Özel ölçülerde üretim imkanı mevcuttur.'],
+                    ['icon' => 'ph-truck', 'text' => '14 iş günü teslimat.'],
+                    ['icon' => 'ph-shield-check', 'text' => '2 yıl garanti.']
+                ]
+            ],
+            [
+                'id' => 'theme-premium',
+                'name' => 'Premium Demo (Whatsapp)',
+                'layout' => 'theme2',
+                'hero' => ['slides' => []],
+                'catSectionTitle' => 'ÖNE ÇIKANLAR',
+                'story' => [
+                    'imgBase64' => '',
+                    'subtitle' => 'HAKKIMIZDA',
+                    'title' => 'Tasarımda Mükemmellik',
+                    'desc' => 'Aura Mobilya olarak, her parçada estetik ve konforu birleştiriyoruz.'
+                ],
+                'categories' => [
+                    ['id' => 'cat-1', 'imgBase64' => '', 'title' => 'Lüks Kanepeler', 'link' => 'theme2-products.html', 'active' => true],
+                    ['id' => 'cat-2', 'imgBase64' => '', 'title' => 'Ahşap Masalar', 'link' => 'theme2-products.html', 'active' => true]
+                ],
+                'galSectionTitle' => 'GALERİ',
+                'galSectionDesc' => 'Minimalist yaşam alanlarımızdan kareler.',
+                'footer' => [
+                    'address' => 'Nişantaşı, İstanbul',
+                    'email' => 'info@auramobilya.com',
+                    'phone' => '+90 555 123 45 67',
+                    'whatsapp' => '905551234567',
+                    'footerDesc' => 'Premium mobilyalar.'
+                ],
+                'productFeatures' => [
+                    ['icon' => 'ph-ruler', 'text' => 'Özel ölçülerde üretim imkanı mevcuttur.'],
+                    ['icon' => 'ph-truck', 'text' => '14 iş günü teslimat.'],
+                    ['icon' => 'ph-shield-check', 'text' => '2 yıl garanti.']
+                ]
+            ]
+        ]
+    ];
+
+    $stmt = $pdo->prepare("REPLACE INTO theme_settings (id, active_theme_id, themes) VALUES (?, ?, ?)");
+    $stmt->execute(['aura_theme_settings', $themeSettings['activeThemeId'], json_encode($themeSettings['themes'])]);
+    echo "Theme settings seeded.\n";
+
 } catch (Exception $e) {
     echo "ERROR: " . $e->getMessage() . "\n";
 }
